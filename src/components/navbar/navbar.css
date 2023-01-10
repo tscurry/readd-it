@@ -1,0 +1,43 @@
+.navbar-container { 
+    position: sticky;
+    top: 0;
+
+    padding: 1rem 3rem;
+    background: #fff;
+}
+
+.navbar-header-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-header-content h1 {
+    font-family: var(--logo-text);
+    font-weight: 100;
+    
+    margin-right: 8rem;
+}
+
+.searchbar {
+    width: 100%;
+    margin-left: 8rem;
+}
+
+.searchbar input {
+    border-radius: 10px;
+    width: 50%;
+    min-height: 25px;
+
+    margin: auto;
+    padding: 0.75rem;
+    border: solid 2px #000;
+}
+
+.search-icon {
+    position: relative;
+    top: 8px;
+    
+    margin-left: 10px;
+    cursor: pointer;
+}
