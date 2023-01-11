@@ -6,6 +6,11 @@
     font-family: var(--font-family);
 }
 
+a, a:visited, a:active, a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
 body {
     background: var(--color-bg);
 }
