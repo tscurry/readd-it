@@ -8,6 +8,7 @@
     background: #fff;
     width: 300px;
     height: 100vh;
+    overflow: scroll;
 }
 
 .subheading-container {
@@ -38,6 +39,13 @@
 
 .content-container:hover {
     background-color: var(--color-bg);
+}
+
+.icon-img-resize {
+    width: 25px;
+    height: 25px;
+    background-size: cover;
+    border-radius: 50%;
 }
 
 

@@ -8,7 +8,7 @@ import "./sidebar.css";
 
 const Sidebar = () => {
   const subreddit = useSelector(state => state.subreddits.data.data.children);
-
+  
   return (
     <div className="sidebar-content">
       <div className="heading-container">
@@ -30,9 +30,10 @@ const Sidebar = () => {
         <p className="subheading-container">Subreddits</p>
         <div className="subreddits-container">
           {subreddit
-            .filter(text => text.data.title !== "Home")
+            .filter(data => data.data.title !== "Home" && data.data.icon_img !== "")
             .map(subredditData => (
               <div className="content-container">
+                <div className="icon-img-resize" style={{ backgroundImage: `url(${subredditData.data.icon_img})` }}></div>
                 <p>{subredditData.data.display_name_prefixed}</p>
               </div>
             ))}
