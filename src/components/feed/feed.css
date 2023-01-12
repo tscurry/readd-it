@@ -1,5 +1,77 @@
 .feed-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  left: 425px;
+  top: 100px;
+  width: 60%;
+}
+
+.data-container {
+  display: flex;
+
+  width: 100%;
+  border: 0 solid #000;
+  height: 550px;
+  margin-bottom: 50px;
+  background-color: #fff;
+
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+}
+
+.votes {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+
+  background: var(--votes-bg);
+  padding: 20px;
+  width: 60px;
+  height: 100%;
+}
+.votes p {
+  padding: 5px 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+.up-vote,
+.down-vote {
+  cursor: pointer;
+}
+
+.up-vote:hover {
+  color: var(--upvote);
+}
+
+.down-vote:hover {
+  color: var(--downvote);
+}
+
+.comments {
+  display: flex;
+}
+.comments p {
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0.65;
+  padding-left: 5px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 15px;
+
+  width: 100%;
+}
+
+.footer p {
+  text-align: center;
 }
