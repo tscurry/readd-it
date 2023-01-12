@@ -4,8 +4,8 @@ import './feed.css';
 
 const Feed = () => {
   return (
-    <div>
-      
+    <div className='feed-container'>
+      <p>aghhgdagdjfa</p>
     </div>
   )
 }

@@ -1,0 +1,36 @@
+.searchbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 75%;    
+}
+
+.searchbar input {
+    border-radius: 10px;
+    width: 50%;
+    min-height: 25px;
+
+    padding: 0.75rem;
+    border: solid 2px #000;
+}
+
+.search-icon {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 780px) {
+    .searchbar input {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .searchbar {
+        width: 100%;
+    }
+    .searchbar input { 
+        width: 100%;
+    }     
+}

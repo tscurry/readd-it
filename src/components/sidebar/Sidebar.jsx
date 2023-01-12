@@ -2,13 +2,20 @@ import React from "react";
 import { RiHome3Line } from "react-icons/ri";
 import { BiTrendingUp } from "react-icons/bi";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { subredditData } from "../../features/redux/reducers/redditSlice";
 
 import "./sidebar.css";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+
   const subreddit = useSelector(state => state.subreddits.data.data.children);
   
+  React.useEffect(() => {
+    dispatch(subredditData())
+  }, [dispatch])
+
   return (
     <div className="sidebar-content">
       <div className="heading-container">
@@ -32,7 +39,7 @@ const Sidebar = () => {
           {subreddit
             .filter(data => data.data.title !== "Home" && data.data.icon_img !== "")
             .map(subredditData => (
-              <div className="content-container">
+              <div className="content-container" key={subredditData.data.id}>
                 <div className="icon-img-resize" style={{ backgroundImage: `url(${subredditData.data.icon_img})` }}></div>
                 <p>{subredditData.data.display_name_prefixed}</p>
               </div>

@@ -1,34 +1,32 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const fetchRedditData = createAsyncThunk("subreddits", async () => {
-  const fetchedData = await fetch("https://www.reddit.com/subreddits.json?limit=100");
-  const json = await fetchedData.json();
+export const subredditData = createAsyncThunk('subreddits', async () => {
+  const data = await fetch ('https://www.reddit.com/subreddits.json?limit=100');
+  const json = await data.json();
   return json;
-});
+})
 
-const allSubredditSlice = createSlice({
+const subredditSlice = createSlice({
   name: "subreddits",
   initialState: {
-    data: {},
+    data: [],
     isLoading: false,
-    hasError: false,
+    error: null,
   },
   reducers: {},
-  extraReducers: {
-    [fetchRedditData.pending]: (state, action) => {
+  extraReducers: builder => {
+    builder.addCase(subredditData.pending, state => {
       state.isLoading = true;
-      state.hasError = false;
-    },
-    [fetchRedditData.fulfilled]: (state, action) => {
+    });
+    builder.addCase(subredditData.fulfilled, (state, action) => {
       state.data = action.payload;
       state.isLoading = false;
-      state.hasError = false;
-    },
-    [fetchRedditData.rejected]: (state, action) => {
+    });
+    builder.addCase(subredditData.rejected, (state, action) => {
       state.isLoading = false;
-      state.hasError = true;
-    },
+      state.error = action.payload;
+    });
   },
 });
 
-export default allSubredditSlice;
+export default subredditSlice;
