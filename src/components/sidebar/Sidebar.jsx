@@ -1,19 +1,27 @@
-import React from "react";
+import * as React from "react";
 import { RiHome3Line } from "react-icons/ri";
 import { BiTrendingUp } from "react-icons/bi";
 
 import { useSelector, useDispatch } from "react-redux";
-import { fetchSubreddit } from "../../features/redux/reducers/reddit";
+
+import { fetchDefaultSubreddits } from "../../features/redux/reducers/defaultSubreddit";
+import { fetchSubreddit } from "../../features/redux/reducers/subreddits";
 
 import "./sidebar.css";
 
 const Sidebar = () => {
+  const [endpoint, setEndpoint] = React.useState("");
+
   const dispatch = useDispatch();
-  const subreddit = useSelector(state => state.reddit.subreddit.data.data.children);
+
+  const defaultSubreddit = useSelector(state => state.default.data.data.children);
 
   React.useEffect(() => {
-    dispatch(fetchSubreddit('subreddits.json?limit=100'))
-  }, [dispatch])
+    if (endpoint !== "") {
+      dispatch(fetchSubreddit(endpoint));
+    }
+    dispatch(fetchDefaultSubreddits());
+  }, [dispatch, endpoint]);
 
   return (
     <div className="sidebar-content">
@@ -35,10 +43,10 @@ const Sidebar = () => {
       <div className="heading-container">
         <p className="subheading-container">Subreddits</p>
         <div className="subreddits-container">
-          {subreddit
+          {defaultSubreddit
             .filter(data => data.data.title !== "Home" && data.data.icon_img !== "")
             .map(subredditData => (
-              <div className="content-container" key={subredditData.id}>
+              <div className="content-container" key={subredditData.data.id} onClick={() => setEndpoint(subredditData.data.display_name_prefixed)}>
                 <div className="icon-img-resize" style={{ backgroundImage: `url(${subredditData.data.icon_img})` }}></div>
                 <p>{subredditData.data.display_name_prefixed}</p>
               </div>

@@ -7,10 +7,10 @@
 }
 
 .box-container {
-  width: 700px;
-  height: 550px;
+  width: 950px;
+  height: auto;
 
-  margin: 25px auto 30px 100px;
+  margin: 25px 0 30px 100px;
 
   border: 0 solid #000;
   background-color: #fff;
@@ -23,6 +23,7 @@
   height: 100%;
   grid-template-columns: 60px minmax(60px, auto);
   grid-template-rows: 50px minmax(50px, auto) 50px;
+  grid-template-areas: "votes header" "votes feed" "votes footer";
 }
 
 .votes-container {
@@ -30,8 +31,7 @@
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  grid-column: 1;
-  grid-row: 1 / 4;
+  grid-area: votes;
 
   background: var(--votes-bg);
   padding-top: 20px;
@@ -56,44 +56,33 @@
   color: var(--downvote);
 }
 
-.comments {
-  display: flex;
-}
-.comments p {
-  font-size: 14px;
-  font-weight: bold;
-  opacity: 0.65;
-  padding-left: 5px;
-}
-
-.footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-
-  height: auto;
-  width: 100%;
-}
-
 .feed-header {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   margin-left: 10px;
+
+  grid-area: header;
 }
 
 .feed-header p {
+  cursor: pointer;
   font-size: 13px;
   padding-left: 10px;
   font-weight: bold;
   margin-right: 50px;
 }
 
-.feed-header span {
-  font-weight: 100;
-  font-size: 12px;
+.feed-header p:hover {
+  text-decoration: underline;
 }
+
+.feed-header span {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-right: 15px;
+}
+
 
 .feed-icon-img {
   height: 25px;
@@ -104,5 +93,48 @@
 
 .feed-body {
   overflow-wrap: break-word;
-  margin-left: 10px;
+  grid-area: feed;
+}
+
+.feed-body p {
+  font-size: 20px;
+  margin: 0 0 10px 10px;
+}
+
+.feed-body img {
+  width: 100%;
+  height: auto;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 15px;
+
+  grid-area: footer;
+  width: 100%;
+  opacity: 0.7;
+}
+
+.comments {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 45px;
+  border-radius: 4px;
+}
+.comments p {
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0.65;
+  padding: 0 5px;
+}
+
+.comment-icon {
+  padding-left: 5px;
+}
+
+.comments:hover {
+  background-color: var(--color-bg);
 }

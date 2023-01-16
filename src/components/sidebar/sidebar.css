@@ -48,7 +48,6 @@
     border-radius: 50%;
 }
 
-
 @media screen and (max-width: 980px) {
     .sidebar-content {
         width: 250px;
