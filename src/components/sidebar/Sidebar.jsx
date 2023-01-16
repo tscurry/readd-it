@@ -3,17 +3,16 @@ import { RiHome3Line } from "react-icons/ri";
 import { BiTrendingUp } from "react-icons/bi";
 
 import { useSelector, useDispatch } from "react-redux";
-import { subredditData } from "../../features/redux/reducers/redditSlice";
+import { fetchSubreddit } from "../../features/redux/reducers/reddit";
 
 import "./sidebar.css";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
+  const subreddit = useSelector(state => state.reddit.subreddit.data.data.children);
 
-  const subreddit = useSelector(state => state.subreddits.data.data.children);
-  
   React.useEffect(() => {
-    dispatch(subredditData())
+    dispatch(fetchSubreddit('subreddits.json?limit=100'))
   }, [dispatch])
 
   return (
@@ -39,7 +38,7 @@ const Sidebar = () => {
           {subreddit
             .filter(data => data.data.title !== "Home" && data.data.icon_img !== "")
             .map(subredditData => (
-              <div className="content-container" key={subredditData.data.id}>
+              <div className="content-container" key={subredditData.id}>
                 <div className="icon-img-resize" style={{ backgroundImage: `url(${subredditData.data.icon_img})` }}></div>
                 <p>{subredditData.data.display_name_prefixed}</p>
               </div>

@@ -1,15 +1,13 @@
 .sidebar-content {
-    display: flex;
-    flex-direction: column;
+    grid-area: sidebar;
 
     position: fixed;
-    left: 0;
     top: 78px;
 
     z-index: 3;
     background: #fff;
     width: 300px;
-    height: 100vh;
+    height: 100%;
     overflow: scroll;
 }
 

@@ -1,16 +1,26 @@
 * {
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    margin: 0;
-    padding: 0;
-    font-family: var(--font-family);
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
 }
 
-a, a:visited, a:active, a:hover {
-    text-decoration: none;
-    color: inherit;
+a,
+a:visited,
+a:active,
+a:hover {
+  text-decoration: none;
+  color: inherit;
 }
 
 body {
-    background: var(--color-bg);
+  background: var(--color-bg);
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 300px auto;
+  grid-template-rows: 78px auto;
+  grid-template-areas: "navbar navbar" "sidebar feed";
 }

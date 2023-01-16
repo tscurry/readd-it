@@ -5,13 +5,13 @@
     top: 0;
 
     z-index: 4;
-    padding: 1rem 3rem;
     background: #fff;
     border-bottom: 2px solid var(--color-bg);
+    grid-area: navbar;
 }
 
 .navbar-header-content {
-    flex: 1;
+    padding: 1rem 3rem;
     display: flex;
     align-items: center;
 }

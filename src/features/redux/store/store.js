@@ -2,8 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import subredditSlice from "../reducers/redditSlice";
-import searchSlice from "../reducers/searchSlice";
+import redditSlice from "../reducers/reddit";
 
 const persistConfig = {
   key: "root",
@@ -11,8 +10,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  subreddits: subredditSlice.reducer,
-  search: searchSlice.reducer,
+  reddit: redditSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

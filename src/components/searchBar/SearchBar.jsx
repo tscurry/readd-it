@@ -2,7 +2,7 @@ import * as React from "react";
 import { FiSearch } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 
-import { searchData } from "../../features/redux/reducers/searchSlice";
+import { searchData } from "../../features/redux/reducers/reddit";
 
 import "./searchBar.css";
 

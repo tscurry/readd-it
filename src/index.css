@@ -7,6 +7,7 @@
     --color-hover: #d6c7b7;
     --color-bg: #e7e7e7;
     --votes-bg: #f4f4f4;
-    --upvote: #cc3700;
-    --downvote: #5b75cc;
+
+    --upvote: #ff0000;
+    --downvote: #088f8f;
 }

@@ -6,11 +6,11 @@ import "./index.css";
 
 const App = () => {
   return (
-    <>
-      <Navbar />
-      <Sidebar />
-      <Feed />
-    </>
+    <div className="app">
+      <Navbar/>
+      <Sidebar/>
+      <Feed/>
+    </div>
   );
 };
 
