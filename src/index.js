@@ -12,7 +12,7 @@ const root = createRoot(container);
 
 root.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
+    <PersistGate persistor={persistor}>
       <App tab="Home" />,
     </PersistGate>
   </Provider>,

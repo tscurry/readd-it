@@ -17,10 +17,15 @@ const Sidebar = () => {
   const defaultSubreddit = useSelector(state => state.default.data.data.children);
 
   React.useEffect(() => {
-    if (endpoint !== "") {
-      dispatch(fetchSubreddit(endpoint));
+    try {
+      if (endpoint !== "") {
+        dispatch(fetchSubreddit(endpoint));
+      } else {
+        dispatch(fetchDefaultSubreddits());
+      }
+    } catch (error) {
+      console.log(error);
     }
-    dispatch(fetchDefaultSubreddits());
   }, [dispatch, endpoint]);
 
   return (
@@ -33,7 +38,7 @@ const Sidebar = () => {
             <a href="#home">Home</a>
           </p>
         </div>
-        <div className="content-container">
+        <div className="content-container" onClick={() => setEndpoint('r/popular')}>
           <BiTrendingUp size={20} />
           <p>
             <a href="#popular">Popular</a>

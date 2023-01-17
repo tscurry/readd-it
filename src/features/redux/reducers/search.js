@@ -10,6 +10,7 @@ const searchSlice = createSlice({
   name: "search",
   initialState: {
     isLoading: false,
+    isSearched: false,
     error: null,
     data: [],
   },
@@ -20,6 +21,7 @@ const searchSlice = createSlice({
     });
     builder.addCase(searchData.fulfilled, (state, action) => {
       state.data = action.payload;
+      state.isSearched = true;
       state.error = null;
       state.isLoading = false;
     });
