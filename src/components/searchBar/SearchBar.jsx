@@ -3,6 +3,7 @@ import { FiSearch } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 
 import { searchData } from "../../features/redux/reducers/search";
+import searchSlice from "../../features/redux/reducers/search";
 
 import "./searchBar.css";
 
@@ -11,6 +12,7 @@ const SearchBar = () => {
   const dispatch = useDispatch();
 
   const handleQuery = () => {
+    dispatch(searchSlice.actions.setSearched(true))
     dispatch(searchData(query));
   };
 

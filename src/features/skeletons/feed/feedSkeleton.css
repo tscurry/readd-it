@@ -1,0 +1,70 @@
+.skeleton-container {
+  width: 950px;
+  height: auto;
+  margin: 25px 0 30px 100px;
+  border: 0 solid #000;
+  background-color: #fff;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 0 17.9px rgba(0, 0, 0, 0.072), 0 1px 25px rgba(0, 0, 0, 0.086), 0 20px 80px rgba(0, 0, 0, 0.12);
+}
+
+.skeleton-box {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 60px minmax(60px, auto);
+  grid-template-rows: 50px minmax(50px, auto) 50px;
+  grid-template-areas: "votes header" "votes feed" "votes footer";
+}
+
+.skeleton-header {
+  grid-area: header;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.header-skeleton {
+  width: 500px;
+  height: 20px;
+}
+
+.skeleton-votes {
+  grid-area: votes;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: var(--votes-bg);
+  padding-top: 20px;
+}
+
+.votes-skeleton {
+  margin: 10px 0;
+  height: 25px;
+  width: 40px;
+}
+
+.skeleton-body {
+  grid-area: feed;
+}
+
+.body-skeleton {
+  margin-left: 10px;
+  width: 95%;
+  height: 300px;
+}
+
+.skeleton-footer {
+  grid-area: footer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.footer-skeleton {
+    height: 30px;
+  width: 180px;
+  margin-left: 10px;
+}

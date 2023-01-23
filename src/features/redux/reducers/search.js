@@ -14,14 +14,18 @@ const searchSlice = createSlice({
     error: null,
     data: [],
   },
-  reducers: {},
+  reducers: {
+    setSearched: (state, action) => {
+      state.isSearched = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(searchData.pending, state => {
       state.isLoading = true;
     });
     builder.addCase(searchData.fulfilled, (state, action) => {
       state.data = action.payload;
-      state.isSearched = true;
+      state.isSearched = false;
       state.error = null;
       state.isLoading = false;
     });
