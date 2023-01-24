@@ -84,6 +84,10 @@ const Feed = () => {
     }
   };
 
+  const isImage = url => {
+    return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+  };
+
   const popularRendering = () => {
     return popular.isLoading
       ? Array(5)
@@ -109,7 +113,7 @@ const Feed = () => {
                 </div>
                 <div className="feed-body">
                   <p>{data.data.title}</p>
-                  <img src={data.data.url} alt="img" />
+                  {isImage(data.data.url) ? <img src={data.data.url} alt="subreddit" /> : null}
                 </div>
                 <div className="footer">
                   <div className="comments">
@@ -148,7 +152,7 @@ const Feed = () => {
               </div>
               <div className="feed-body">
                 <p>{data.data.title}</p>
-                <img src={data.data.url} alt="img" />
+                {isImage(data.data.url) ? <img src={data.data.url} alt="subreddit" /> : null}
               </div>
               <div className="footer">
                 <div className="comments">
@@ -180,7 +184,7 @@ const Feed = () => {
               </div>
               <div className="feed-body">
                 <p>{data.data.title}</p>
-                <img src={data.data.url} alt="img" />
+                {isImage(data.data.url) ? <img src={data.data.url} alt="subreddit" /> : null}
               </div>
               <div className="footer">
                 <div className="comments">
