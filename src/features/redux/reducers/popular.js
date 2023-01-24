@@ -11,7 +11,7 @@ const popularSlice = createSlice({
   initialState: {
     isLoading: false,
     error: null,
-    data: [],
+    data: {},
   },
   reducers: {},
   extraReducers: builder => {

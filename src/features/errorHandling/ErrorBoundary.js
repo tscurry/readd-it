@@ -2,6 +2,7 @@ import * as React from "react";
 
 const ErrorBoundary = ({ children }) => {
   const [hasError, setHasError] = React.useState(false);
+  //eslint-disable-next-line
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
@@ -18,9 +19,9 @@ const ErrorBoundary = ({ children }) => {
 
   if (hasError) {
     return (
-      <div style={{ paddingLeft: '2rem', marginTop: '50px'}}>
-        <h1 style={{ fontSize: '17px', marginBottom: '30px'}}>Oops.... Something went wrong</h1>
-        <p style={{ marginBottom: '10px'}}>There was an error displaying subreddits</p>
+      <div style={{ paddingLeft: "2rem", marginTop: "50px" }}>
+        <h1 style={{ fontSize: "17px", marginBottom: "30px" }}>Oops.... Something went wrong</h1>
+        <p style={{ marginBottom: "10px" }}>There was an error displaying subreddits</p>
         <p>Please reload page to try again.</p>
       </div>
     );

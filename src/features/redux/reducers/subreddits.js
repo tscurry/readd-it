@@ -12,7 +12,7 @@ const subredditSlice = createSlice({
     isLoading: false,
     error: null,
     isClicked: false,
-    data: [],
+    data: {},
   },
   reducers: {
     setIsClicked: (state, action) => {
@@ -24,7 +24,7 @@ const subredditSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(fetchSubreddit.fulfilled, (state, action) => {
-      // state.data = action.payload;
+      state.data = action.payload;
       state.isClicked = false
       state.error = null;
       state.isLoading = false;

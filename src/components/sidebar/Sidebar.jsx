@@ -42,13 +42,11 @@ const Sidebar = () => {
     dispatch(subredditSlice.actions.setIsClicked(true));
   };
 
-  console.log(!defaultSubreddit.data, "hello");
-
   return (
     <div className="sidebar-content">
       <div className="heading-container">
         <p className="subheading-container">Feeds</p>
-        <div className="content-container">
+        <div className="content-container" onClick={() => handleEndpoint("r/Home")}>
           <RiHome3Line size={20} />
           <p className="subreddit">
             <a href="#home">Home</a>

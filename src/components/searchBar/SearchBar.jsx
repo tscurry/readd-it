@@ -12,14 +12,14 @@ const SearchBar = () => {
   const dispatch = useDispatch();
 
   const handleQuery = () => {
-    dispatch(searchSlice.actions.setSearched(true))
+    dispatch(searchSlice.actions.setSearched(true));
     dispatch(searchData(query));
   };
-
+  
   return (
     <div className="searchbar">
       <input type="text" placeholder="Search Reddon" value={query} onChange={e => setQuery(e.target.value)} />
-      <FiSearch size={27} className="search-icon" onClick={handleQuery}/>
+      <FiSearch size={27} className="search-icon" onClick={handleQuery} />
     </div>
   );
 };
