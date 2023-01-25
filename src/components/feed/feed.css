@@ -48,11 +48,21 @@
   cursor: pointer;
 }
 
-.up-vote:hover {
+.up-voted {
+  cursor: pointer;
   color: var(--upvote);
 }
 
-.down-vote:hover {
+.up-voted-p {
+  color: var(--upvote);
+}
+
+.down-voted {
+  cursor: pointer;
+  color: var(--downvote);
+}
+
+.down-voted-p {
   color: var(--downvote);
 }
 
@@ -66,15 +76,10 @@
 }
 
 .feed-header p {
-  cursor: pointer;
   font-size: 13px;
   padding-left: 10px;
   font-weight: bold;
   margin-right: 50px;
-}
-
-.feed-header p:hover {
-  text-decoration: underline;
 }
 
 .feed-header span {

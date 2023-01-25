@@ -46,7 +46,7 @@ const Sidebar = () => {
     <div className="sidebar-content">
       <div className="heading-container">
         <p className="subheading-container">Feeds</p>
-        <div className="content-container" onClick={() => handleEndpoint("r/Home")}>
+        <div className="content-container" onClick={e => handleEndpoint(e, "r/Home")}>
           <RiHome3Line size={20} />
           <p className="subreddit">
             <a href="#home">Home</a>

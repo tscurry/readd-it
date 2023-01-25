@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 
-import { BsArrowDownSquare, BsArrowUpSquare } from "react-icons/bs";
+import { TiArrowUpOutline, TiArrowDownOutline } from "react-icons/ti";
 import { GoComment } from "react-icons/go";
 
 import FeedSkeleton from "../../features/skeletons/feed/feedSkeleton";
@@ -15,6 +15,8 @@ const Feed = () => {
   const [searched, setSearched] = React.useState(false);
   const [showFeed, setShowFeed] = React.useState(false);
   const [subredditIconUrl, setSubredditIconUrl] = React.useState("");
+  const [upvoted, setUpvoted] = React.useState({});
+  const [downvoted, setDownvoted] = React.useState({});
 
   const dispatch = useDispatch();
 
@@ -63,6 +65,36 @@ const Feed = () => {
 
   const formatDate = date => moment.unix(date).fromNow();
 
+  // const handleUpVote = () => {
+  //   if (downvoted) {
+  //     setDownvoted(false);
+  //   }
+
+  //   setUpvoted(prev => !prev);
+  // };
+
+  // const handleDownVote = () => {
+  //   if (upvoted) {
+  //     setUpvoted(false);
+  //   }
+
+  //   setDownvoted(prev => !prev);
+  // };
+
+  const handleUpVote = id => {
+    if (downvoted[id]) {
+      setDownvoted({ ...downvoted, [id]: false });
+    }
+    setUpvoted({ ...upvoted, [id]: !upvoted[id] });
+  };
+
+  const handleDownVote = id => {
+    if (upvoted[id]) {
+      setUpvoted({ ...upvoted, [id]: false });
+    }
+    setDownvoted({ ...downvoted, [id]: !downvoted[id] });
+  };
+
   const fetchSubredditIcon = async data => {
     data
       .filter(data => data.data.thumbnail !== "nsfw")
@@ -99,9 +131,13 @@ const Feed = () => {
             <div className="box-container" key={index}>
               <div className="data-container">
                 <div className="votes-container">
-                  <BsArrowUpSquare size={27} className="up-vote" />
-                  <p>{formatNumber(data.data.score)}</p>
-                  <BsArrowDownSquare size={27} className="down-vote" />
+                  <TiArrowUpOutline size={27} className={`${upvoted[index] ? "up-voted" : "up-vote"}`} onClick={() => handleUpVote(index)} />
+                  <p className={upvoted[index] ? "up-voted" : downvoted[index] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
+                  <TiArrowDownOutline
+                    size={27}
+                    className={`${downvoted[index] ? "down-voted" : "down-vote"}`}
+                    onClick={() => handleDownVote(index)}
+                  />
                 </div>
                 <div className="feed-header">
                   {subredditIconUrl[data.data.subreddit_name_prefixed] ? (
@@ -138,14 +174,14 @@ const Feed = () => {
           <div className="box-container" key={index}>
             <div className="data-container">
               <div className="votes-container">
-                <BsArrowUpSquare size={27} className="up-vote" />
-                <p>{formatNumber(data.data.score)}</p>
-                <BsArrowDownSquare size={27} className="down-vote" />
+                <TiArrowUpOutline size={27} className={`${upvoted[index] ? "up-voted" : "up-vote"}`} onClick={() => handleUpVote(index)} />
+                <p className={upvoted[index] ? "up-voted" : downvoted[index] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
+                <TiArrowDownOutline size={27} className={`${downvoted[index] ? "down-voted" : "down-vote"}`} onClick={() => handleDownVote(index)} />
               </div>
               <div className="feed-header">
                 {subredditIconUrl[data.data.subreddit_name_prefixed] ? (
                   <img className="feed-icon-img" src={subredditIconUrl[data.data.subreddit_name_prefixed]} alt="subreddit-icon" />
-                ) : null}{" "}
+                ) : null}
                 <p>{data.data.subreddit_name_prefixed}</p>
                 <span>Posted by u/{data.data.author} </span>
                 <span>{formatDate(data.data.created_utc)}</span>
@@ -170,14 +206,14 @@ const Feed = () => {
           <div className="box-container" key={index}>
             <div className="data-container">
               <div className="votes-container">
-                <BsArrowUpSquare size={27} className="up-vote" />
-                <p>{formatNumber(data.data.score)}</p>
-                <BsArrowDownSquare size={27} className="down-vote" />
+                <TiArrowUpOutline size={27} className={`${upvoted[index] ? "up-voted" : "up-vote"}`} onClick={() => handleUpVote(index)} />
+                <p className={upvoted[index] ? "up-voted" : downvoted[index] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
+                <TiArrowDownOutline size={27} className={`${downvoted[index] ? "down-voted" : "down-vote"}`} onClick={() => handleDownVote(index)} />
               </div>
               <div className="feed-header">
                 {subredditIconUrl[data.data.subreddit_name_prefixed] ? (
                   <img className="feed-icon-img" src={subredditIconUrl[data.data.subreddit_name_prefixed]} alt="subreddit-icon" />
-                ) : null}{" "}
+                ) : null}
                 <p>{data.data.subreddit_name_prefixed}</p>
                 <span>Posted by u/{data.data.author} </span>
                 <span>{formatDate(data.data.created_utc)}</span>
