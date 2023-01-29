@@ -46,13 +46,13 @@ const Sidebar = () => {
     <div className="sidebar-content">
       <div className="heading-container">
         <p className="subheading-container">Feeds</p>
-        <div className="content-container" onClick={e => handleEndpoint(e, "r/Home")}>
+        <div className="content-container" onClick={() => handleEndpoint("r/Home")}>
           <RiHome3Line size={20} />
           <p className="subreddit">
             <a href="#home">Home</a>
           </p>
         </div>
-        <div className="content-container" onClick={() => handleEndpoint("r/popular")}>
+        <div className="content-container" onClick={() => handleEndpoint("r/Popular")}>
           <BiTrendingUp size={20} />
           <p className="subreddit">
             <a href="#popular">Popular</a>

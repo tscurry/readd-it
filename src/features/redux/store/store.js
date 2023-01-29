@@ -1,7 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { persistReducer, persistStore } from "redux-persist";
+import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { defaultSlice, searchSlice, popularSlice, subredditSlice } from "../reducers/index";
 
@@ -21,6 +20,13 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, PAUSE, PURGE, REGISTER, REHYDRATE, PERSIST],
+        immutableStateInvariant: []
+      },
+    }),
 });
 
-export const persistor = persistStore(store, { storage: AsyncStorage });
+export const persistor = persistStore(store);

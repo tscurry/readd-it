@@ -1,13 +1,10 @@
 import * as React from "react";
 
 const ErrorBoundary = ({ children }) => {
-  const [hasError, setHasError] = React.useState(false);
-  //eslint-disable-next-line
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
     const onError = errEvent => {
-      setHasError(true);
       setError(errEvent.error);
     };
     window.addEventListener("error", onError);
@@ -17,7 +14,7 @@ const ErrorBoundary = ({ children }) => {
     };
   }, []);
 
-  if (hasError) {
+  if (error) {
     return (
       <div style={{ paddingLeft: "2rem", marginTop: "50px" }}>
         <h1 style={{ fontSize: "17px", marginBottom: "30px" }}>Oops.... Something went wrong</h1>

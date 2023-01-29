@@ -97,7 +97,6 @@
 }
 
 .feed-body {
-  overflow-wrap: break-word;
   grid-area: feed;
 }
 
