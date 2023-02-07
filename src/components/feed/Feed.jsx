@@ -1,10 +1,20 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
+
+import { useSelector, useDispatch } from "react-redux";
+
 import { TiArrowUpOutline, TiArrowDownOutline } from "react-icons/ti";
 import { GoComment } from "react-icons/go";
+
+import TopButton from "../../features/backToTop/topButton";
+import CommentsSkeleton from "../../features/skeletons/comments/commentsSkeleton";
 import FeedSkeleton from "../../features/skeletons/feed/feedSkeleton";
+import Comments from "../comments/Comments";
+import subredditSlice from "../../features/redux/reducers/subreddits";
+
 import { popularData } from "../../features/redux/reducers/popular";
+import { getComments } from "../../features/redux/reducers/subreddits";
+
 import "./feed.css";
 
 const Feed = () => {
@@ -77,7 +87,7 @@ const Feed = () => {
   };
 
   const isImage = url => {
-    return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+    return url.match(/\.(jpeg|jpg|gif|png)$/) !== null;
   };
 
   const fetchSubredditIcon = async data => {
@@ -99,6 +109,11 @@ const Feed = () => {
     }
   };
 
+  const handleComments = (subText, id) => {
+    dispatch(getComments({ subText, id }));
+    dispatch(subredditSlice.actions.toggleId(id));
+  };
+
   const popularRendering = () => {
     if (popular.isLoading) {
       return Array(5)
@@ -109,9 +124,17 @@ const Feed = () => {
         <div className="box-container" key={index}>
           <div className="data-container">
             <div className="votes-container">
-              <TiArrowUpOutline size={27} className={`${upvoted[index] ? "up-voted" : "up-vote"}`} onClick={() => handleUpVote(index)} />
-              <p className={upvoted[index] ? "up-voted" : downvoted[index] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
-              <TiArrowDownOutline size={27} className={`${downvoted[index] ? "down-voted" : "down-vote"}`} onClick={() => handleDownVote(index)} />
+              <TiArrowUpOutline
+                size={27}
+                className={`${upvoted[data.data.id] ? "up-voted" : "up-vote"}`}
+                onClick={() => handleUpVote(data.data.id)}
+              />
+              <p className={upvoted[data.data.id] ? "up-voted" : downvoted[data.data.id] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
+              <TiArrowDownOutline
+                size={27}
+                className={`${downvoted[data.data.id] ? "down-voted" : "down-vote"}`}
+                onClick={() => handleDownVote(data.data.id)}
+              />
             </div>
             <div className="feed-header">
               {subredditIconUrl[data.data.subreddit_name_prefixed] ? (
@@ -128,15 +151,21 @@ const Feed = () => {
               ) : data.data.is_video ? (
                 <video height="auto" width="100%" controls>
                   <source src={data.data.media.reddit_video.fallback_url} />
+                  <p className="error-media">Sorry, this content cannot be displayed.</p>
                 </video>
               ) : null}
             </div>
             <div className="footer">
-              <div className="comments">
+              <div className="comments" onClick={() => handleComments(data.data.subreddit_name_prefixed, data.data.id)}>
                 <GoComment size={25} className="comment-icon" />
                 <p>{formatNumber(data.data.num_comments)} Comments</p>
               </div>
             </div>
+            {subreddit.commentsLoading && subreddit.toggleId !== "" && subreddit.toggleId === data.data.id
+              ? Array(2)
+                  .fill()
+                  .map((_, index) => <CommentsSkeleton key={index} />)
+              : subreddit.toggleId === data.data.id && <Comments />}
           </div>
         </div>
       ));
@@ -153,9 +182,17 @@ const Feed = () => {
         <div className="box-container" key={index}>
           <div className="data-container">
             <div className="votes-container">
-              <TiArrowUpOutline size={27} className={`${upvoted[index] ? "up-voted" : "up-vote"}`} onClick={() => handleUpVote(index)} />
-              <p className={upvoted[index] ? "up-voted" : downvoted[index] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
-              <TiArrowDownOutline size={27} className={`${downvoted[index] ? "down-voted" : "down-vote"}`} onClick={() => handleDownVote(index)} />
+              <TiArrowUpOutline
+                size={27}
+                className={`${upvoted[data.data.id] ? "up-voted" : "up-vote"}`}
+                onClick={() => handleUpVote(data.data.id)}
+              />
+              <p className={upvoted[data.data.id] ? "up-voted" : downvoted[data.data.id] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
+              <TiArrowDownOutline
+                size={27}
+                className={`${downvoted[data.data.id] ? "down-voted" : "down-vote"}`}
+                onClick={() => handleDownVote(data.data.id)}
+              />
             </div>
             <div className="feed-header">
               {subredditIconUrl[data.data.subreddit_name_prefixed] ? (
@@ -172,15 +209,21 @@ const Feed = () => {
               ) : data.data.is_video ? (
                 <video height="auto" width="100%" controls>
                   <source src={data.data.media.reddit_video.fallback_url} />
+                  <p className="error-media">Sorry, this content cannot be displayed.</p>
                 </video>
-              ) : null}{" "}
+              ) : null}
             </div>
             <div className="footer">
-              <div className="comments">
+              <div className="comments" onClick={() => handleComments(data.data.subreddit_name_prefixed, data.data.id)}>
                 <GoComment size={25} className="comment-icon" />
                 <p>{formatNumber(data.data.num_comments)} Comments</p>
               </div>
             </div>
+            {subreddit.commentsLoading && subreddit.toggleId !== "" && subreddit.toggleId === data.data.id
+              ? Array(2)
+                  .fill()
+                  .map((_, index) => <CommentsSkeleton key={index} />)
+              : subreddit.toggleId === data.data.id && <Comments />}
           </div>
         </div>
       ));
@@ -189,9 +232,17 @@ const Feed = () => {
         <div className="box-container" key={index}>
           <div className="data-container">
             <div className="votes-container">
-              <TiArrowUpOutline size={27} className={`${upvoted[index] ? "up-voted" : "up-vote"}`} onClick={() => handleUpVote(index)} />
-              <p className={upvoted[index] ? "up-voted" : downvoted[index] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
-              <TiArrowDownOutline size={27} className={`${downvoted[index] ? "down-voted" : "down-vote"}`} onClick={() => handleDownVote(index)} />
+              <TiArrowUpOutline
+                size={27}
+                className={`${upvoted[data.data.id] ? "up-voted" : "up-vote"}`}
+                onClick={() => handleUpVote(data.data.id)}
+              />
+              <p className={upvoted[data.data.id] ? "up-voted" : downvoted[data.data.id] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
+              <TiArrowDownOutline
+                size={27}
+                className={`${downvoted[data.data.id] ? "down-voted" : "down-vote"}`}
+                onClick={() => handleDownVote(data.data.id)}
+              />
             </div>
             <div className="feed-header">
               {subredditIconUrl[data.data.subreddit_name_prefixed] ? (
@@ -208,15 +259,21 @@ const Feed = () => {
               ) : data.data.is_video ? (
                 <video height="auto" width="100%" controls>
                   <source src={data.data.media.reddit_video.fallback_url} />
+                  <p className="error-media">Sorry, this content cannot be displayed.</p>
                 </video>
-              ) : null}{" "}
+              ) : null}
             </div>
             <div className="footer">
-              <div className="comments">
+              <div className="comments" onClick={() => handleComments(data.data.subreddit_name_prefixed, data.data.id)}>
                 <GoComment size={25} className="comment-icon" />
                 <p>{formatNumber(data.data.num_comments)} Comments</p>
               </div>
             </div>
+            {subreddit.commentsLoading && subreddit.toggleId !== "" && subreddit.toggleId === data.data.id
+              ? Array(2)
+                  .fill()
+                  .map((_, index) => <CommentsSkeleton key={index} />)
+              : subreddit.toggleId === data.data.id && <Comments />}
           </div>
         </div>
       ));
@@ -225,7 +282,10 @@ const Feed = () => {
 
   return (
     <>
-      <div className="feed-container">{showFeed ? feedRendering() : popularRendering()}</div>
+      <div className="feed-container">
+        {showFeed ? feedRendering() : popularRendering()}
+        <TopButton />
+      </div>
     </>
   );
 };

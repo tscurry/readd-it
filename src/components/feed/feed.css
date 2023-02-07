@@ -7,7 +7,8 @@
 }
 
 .box-container {
-  width: 950px;
+  min-width: 950px;
+  max-width: 75%;
   height: auto;
 
   margin: 25px 0 30px 100px;
@@ -23,7 +24,7 @@
   height: 100%;
   grid-template-columns: 60px minmax(60px, auto);
   grid-template-rows: 50px minmax(50px, auto) 50px;
-  grid-template-areas: "votes header" "votes feed" "votes footer";
+  grid-template-areas: "votes header" "votes feed" "votes footer" "votes comments";
 }
 
 .votes-container {
@@ -88,7 +89,6 @@
   margin-right: 15px;
 }
 
-
 .feed-icon-img {
   height: 25px;
   width: 25px;
@@ -141,4 +141,9 @@
 
 .comments:hover {
   background-color: var(--color-bg);
+}
+
+.error-media {
+  opacity: 0.5;
+  font-style: italic;
 }

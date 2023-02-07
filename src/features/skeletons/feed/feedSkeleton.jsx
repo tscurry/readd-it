@@ -2,7 +2,7 @@ import * as React from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { TiArrowUpOutline, TiArrowDownOutline } from 'react-icons/ti';
+import { TiArrowUpOutline, TiArrowDownOutline } from "react-icons/ti";
 import { GoComment } from "react-icons/go";
 
 import "./feedSkeleton.css";
@@ -23,8 +23,8 @@ const FeedSkeleton = () => {
           <Skeleton className="body-skeleton" />
         </div>
         <div className="skeleton-footer">
-        <GoComment size={25} className="skeleton-comment-icon" />
-          <Skeleton className='footer-skeleton'/>
+          <GoComment size={25} className="skeleton-comment-icon" />
+          <Skeleton className="footer-skeleton" />
         </div>
       </div>
     </div>
