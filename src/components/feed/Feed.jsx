@@ -7,7 +7,6 @@ import { TiArrowUpOutline, TiArrowDownOutline } from "react-icons/ti";
 import { GoComment } from "react-icons/go";
 
 import TopButton from "../../features/backToTop/topButton";
-import CommentsSkeleton from "../../features/skeletons/comments/commentsSkeleton";
 import FeedSkeleton from "../../features/skeletons/feed/feedSkeleton";
 import Comments from "../comments/Comments";
 import subredditSlice from "../../features/redux/reducers/subreddits";
@@ -110,8 +109,9 @@ const Feed = () => {
   };
 
   const handleComments = (subText, id) => {
-    dispatch(getComments({ subText, id }));
+    dispatch(getComments({ subText, id, limit: 10 }));
     dispatch(subredditSlice.actions.toggleId(id));
+    dispatch(subredditSlice.actions.resetLimit(10));
   };
 
   const popularRendering = () => {
@@ -161,11 +161,7 @@ const Feed = () => {
                 <p>{formatNumber(data.data.num_comments)} Comments</p>
               </div>
             </div>
-            {subreddit.commentsLoading && subreddit.toggleId !== "" && subreddit.toggleId === data.data.id
-              ? Array(2)
-                  .fill()
-                  .map((_, index) => <CommentsSkeleton key={index} />)
-              : subreddit.toggleId === data.data.id && <Comments />}
+            {subreddit.toggleId === data.data.id && <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />}
           </div>
         </div>
       ));
@@ -219,11 +215,7 @@ const Feed = () => {
                 <p>{formatNumber(data.data.num_comments)} Comments</p>
               </div>
             </div>
-            {subreddit.commentsLoading && subreddit.toggleId !== "" && subreddit.toggleId === data.data.id
-              ? Array(2)
-                  .fill()
-                  .map((_, index) => <CommentsSkeleton key={index} />)
-              : subreddit.toggleId === data.data.id && <Comments />}
+            {subreddit.toggleId === data.data.id && <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />}
           </div>
         </div>
       ));
@@ -269,11 +261,7 @@ const Feed = () => {
                 <p>{formatNumber(data.data.num_comments)} Comments</p>
               </div>
             </div>
-            {subreddit.commentsLoading && subreddit.toggleId !== "" && subreddit.toggleId === data.data.id
-              ? Array(2)
-                  .fill()
-                  .map((_, index) => <CommentsSkeleton key={index} />)
-              : subreddit.toggleId === data.data.id && <Comments />}
+            {subreddit.toggleId === data.data.id && <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />}
           </div>
         </div>
       ));

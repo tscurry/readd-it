@@ -7,8 +7,8 @@ export const fetchSubreddit = createAsyncThunk("subreddits", async subreddit => 
 });
 
 export const getComments = createAsyncThunk("getComments", async params => {
-  const { subText, id } = params;
-  const data = await fetch(`https://www.reddit.com/${subText}/comments/${id}.json?limit=10`);
+  let { subText, id, limit } = params;
+  const data = await fetch(`https://www.reddit.com/${subText}/comments/${id}.json?limit=${limit}`);
   const json = await data.json();
 
   return json[1].data.children;
@@ -24,18 +24,25 @@ const subredditSlice = createSlice({
     commentsLoading: false,
     postComments: {},
     toggleId: "",
+    limit: 10,
   },
   reducers: {
     setIsClicked: (state, action) => {
       state.isClicked = action.payload;
     },
     toggleId: (state, action) => {
-      if(state.toggleId !== action.payload) {
+      if (state.toggleId !== action.payload) {
         state.toggleId = action.payload;
       } else {
-        state.toggleId = ''
+        state.toggleId = "";
       }
     },
+    increaseLimit: (state, action) => {
+      state.limit = state.limit + action.payload;
+    },
+    resetLimit: (state, action) => {
+      state.limit = action.payload;
+    }
   },
   extraReducers: builder => {
     builder.addCase(fetchSubreddit.pending, state => {

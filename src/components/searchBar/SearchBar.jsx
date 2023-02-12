@@ -11,16 +11,17 @@ const SearchBar = () => {
   const [query, setQuery] = React.useState("");
   const dispatch = useDispatch();
 
-  const handleQuery = () => {
+  const handleQuery = e => {
+    e.preventDefault();
     dispatch(searchSlice.actions.setSearched(true));
     dispatch(searchData(query));
   };
-  
+
   return (
-    <div className="searchbar">
+    <form className="searchbar" onSubmit={handleQuery}>
       <input type="text" placeholder="Search Reddon" value={query} onChange={e => setQuery(e.target.value)} />
       <FiSearch size={27} className="search-icon" onClick={handleQuery} />
-    </div>
+    </form>
   );
 };
 

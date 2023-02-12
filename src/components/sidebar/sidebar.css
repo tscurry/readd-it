@@ -1,62 +1,61 @@
 .sidebar-content {
-    grid-area: sidebar;
+  grid-area: sidebar;
 
-    position: fixed;
-    top: 78px;
+  position: fixed;
+  top: 78px;
 
-    z-index: 3;
-    background: #fff;
-    width: 300px;
-    height: 100%;
-    overflow: scroll;
+  z-index: 3;
+  background: #fff;
+  width: 300px;
+  height: 100%;
+  overflow: scroll;
 }
 
 .subheading-container {
-    text-transform: uppercase;
-    font-size: 12px;
-    font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
 
-    opacity: 0.5;
-    margin-bottom: 15px;
-    margin: 2rem 2rem 1rem;
+  opacity: 0.5;
+  margin-bottom: 15px;
+  margin: 2rem 2rem 1rem;
 }
 
 .content-container {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
 
-    padding-left: 2rem;
-    width: 100%;
-    height: 40px;
+  padding-left: 2rem;
+  width: 100%;
+  height: 40px;
 }
 
 .subreddit {
-    font-size: 14px;
-    padding-left: 10px;
+  font-size: 14px;
+  padding-left: 10px;
 }
 
 .content-container:hover {
-    background-color: var(--votes-bg);
+  background-color: var(--votes-bg);
 }
 
 .icon-img-resize {
-    width: 25px;
-    height: 25px;
-    background-size: cover;
-    border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  background-size: cover;
+  border-radius: 50%;
 }
 
-@media screen and (max-width: 980px) {
-    .sidebar-content {
-        width: 250px;
-    }
+@media screen and (max-width: 1450px) {
+  .sidebar-content {
+    width: 250px;
+  }
 }
 
-@media screen and (max-width: 850px) {
-    .sidebar-content {
-        display: none;
-    }
-    
+@media screen and (max-width: 950px) {
+  .sidebar-content {
+    display: none;
+  }
 }
