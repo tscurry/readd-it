@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 
 import { useDispatch, useSelector } from "react-redux";
 import { TiArrowUpOutline, TiArrowDownOutline } from "react-icons/ti";
+import CommentsSkeleton from "../../features/skeletons/comments/commentsSkeleton";
 
 import "./comments.css";
 import subredditSlice, { getComments } from "../../features/redux/reducers/subreddits";
@@ -68,45 +69,51 @@ const Comments = ({ subText, id }) => {
   return (
     <>
       <div className="comments-container">
-        {comments.toggleId === id && comments.postComments.length > 0 ? (
-          comments.postComments
-            .filter(data => data.data.author !== "[deleted]")
-            .map((commentsData, index) => (
-              <div key={index}>
-                {commentsData.kind === "more" ? (
-                  <div className={loading ? "loading" : "view-more"} onClick={() => viewMore()}>
-                    {loading ? "Loading..." : "View More"}
+        {comments.error ? (
+          <div className="comments-data">
+            <p className="comment-body">{comments.error}</p>
+          </div>
+        ) : comments.commentsLoading && !loading ? (
+          Array(1)
+            .fill()
+            .map((_, index) => <CommentsSkeleton key={index} />)
+        ) : comments.postComments.length > 0 ? (
+          comments.postComments.map((commentsData, index) => (
+            <div key={index}>
+              {commentsData.kind === "more" ? (
+                <div className={loading ? "loading" : "view-more"} onClick={() => viewMore()}>
+                  {loading ? "Loading..." : "View More"}
+                </div>
+              ) : (
+                <div className="comments-data">
+                  <div className="comments-header">
+                    <h3>{commentsData.data.author}</h3>
+                    <span>{formatCommentsDate(commentsData.data.created_utc)}</span>
                   </div>
-                ) : (
-                  <div className="comments-data">
-                    <div className="comments-header">
-                      <h3>{commentsData.data.author}</h3>
-                      <span>{formatCommentsDate(commentsData.data.created_utc)}</span>
-                    </div>
-                    <div className="comment-body">
-                      <ReactMarkdown children={commentsData.data.body} remarkPlugins={[remarkGfm]} />
-                    </div>
-                    <div className="comment-footer">
-                      <TiArrowUpOutline
-                        size={20}
-                        id='resizable-icon'
-                        className={`resizable-icon ${upvoted[commentsData.data.id] ? "up-voted" : "up-vote"}`}
-                        onClick={() => handleUpVote(commentsData.data.id)}
-                      />
-                      <p className={upvoted[commentsData.data.id] ? "up-voted" : downvoted[commentsData.data.id] ? "down-voted" : ""}>
-                        {formatCommentsNumber(commentsData.data.score)}
-                      </p>
-                      <TiArrowDownOutline
-                        size={20}
-                        id='resizable-icon'
-                        className={`resizable-icon ${downvoted[commentsData.data.id] ? "down-voted" : "down-vote"}`}
-                        onClick={() => handleDownVote(commentsData.data.id)}
-                      />
-                    </div>
+                  <div className="comment-body">
+                    <ReactMarkdown children={commentsData.data.body} remarkPlugins={[remarkGfm]} />
                   </div>
-                )}
-              </div>
-            ))
+                  <div className="comment-footer">
+                    <TiArrowUpOutline
+                      size={20}
+                      id="resizable-icon"
+                      className={`resizable-icon ${upvoted[commentsData.data.id] ? "up-voted" : "up-vote"}`}
+                      onClick={() => handleUpVote(commentsData.data.id)}
+                    />
+                    <p className={upvoted[commentsData.data.id] ? "up-voted" : downvoted[commentsData.data.id] ? "down-voted" : ""}>
+                      {formatCommentsNumber(commentsData.data.score)}
+                    </p>
+                    <TiArrowDownOutline
+                      size={20}
+                      id="resizable-icon"
+                      className={`resizable-icon ${downvoted[commentsData.data.id] ? "down-voted" : "down-vote"}`}
+                      onClick={() => handleDownVote(commentsData.data.id)}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          ))
         ) : (
           <div className="comments-data">
             <p className="comment-body">No comments found.</p>

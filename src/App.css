@@ -24,3 +24,12 @@ body {
   grid-template-rows: 78px auto;
   grid-template-areas: "navbar navbar" "sidebar feed";
 }
+
+@media screen and (max-width: 950px) {
+  .app {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 78px auto;
+    grid-template-areas: "navbar" "feed";
+  }
+}

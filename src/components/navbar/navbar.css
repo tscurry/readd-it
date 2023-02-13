@@ -29,7 +29,7 @@
 
 .menu-open {
   position: fixed;
-  top: 76px;
+  top: 77px;
   right: 0;
   width: 275px;
   background-color: #fff;
@@ -42,8 +42,8 @@
 }
 
 #menu-open-subreddit {
+  background-color: #fff;
   height: 100vh;
-  overflow: scroll;
 }
 
 @media screen and (max-width: 950px) {
@@ -53,5 +53,28 @@
   .hamburg-menu {
     display: block;
     cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 710px) {
+  .navbar-header-content h1 {
+    font-size: 20px;
+  }
+  .hamburg-menu {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .navbar-header-content h1 {
+    font-size: 15px;
+  }
+  .hamburg-menu {
+    width: 25px;
+    height: 25px;
+  }
+  .menu-open {
+    top: 75px;
   }
 }

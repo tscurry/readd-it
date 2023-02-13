@@ -56,6 +56,7 @@ const subredditSlice = createSlice({
     });
     builder.addCase(fetchSubreddit.rejected, (state, action) => {
       state.error = action.error.message;
+      state.isLoading = false;
     });
     builder.addCase(getComments.pending, state => {
       state.commentsLoading = true;
@@ -67,6 +68,7 @@ const subredditSlice = createSlice({
     });
     builder.addCase(getComments.rejected, (state, action) => {
       state.error = action.error.message;
+      state.commentsLoading = false;
     });
   },
 });

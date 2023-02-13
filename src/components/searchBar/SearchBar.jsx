@@ -15,11 +15,12 @@ const SearchBar = () => {
     e.preventDefault();
     dispatch(searchSlice.actions.setSearched(true));
     dispatch(searchData(query));
+    setQuery("");
   };
 
   return (
     <form className="searchbar" onSubmit={handleQuery}>
-      <input type="text" placeholder="Search Reddon" value={query} onChange={e => setQuery(e.target.value)} />
+      <input type="text" placeholder="Search readd-it" value={query} onChange={e => setQuery(e.target.value)} />
       <FiSearch size={27} className="search-icon" onClick={handleQuery} />
     </form>
   );

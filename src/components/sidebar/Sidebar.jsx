@@ -1,6 +1,7 @@
 import * as React from "react";
 import { RiHome3Line } from "react-icons/ri";
 import { BiTrendingUp } from "react-icons/bi";
+import { MdNewReleases } from "react-icons/md";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -48,20 +49,20 @@ const Sidebar = () => {
         <p className="subheading-container">Feeds</p>
         <div className="content-container" onClick={() => handleEndpoint("r/Home")}>
           <RiHome3Line size={20} />
-          <p className="subreddit">
-            <a href="#home">Home</a>
-          </p>
+          <p className="subreddit">Home</p>
         </div>
         <div className="content-container" onClick={() => handleEndpoint("r/Popular")}>
           <BiTrendingUp size={20} />
-          <p className="subreddit">
-            <a href="#popular">Popular</a>
-          </p>
+          <p className="subreddit">Popular</p>
+        </div>
+        <div className="content-container" onClick={() => handleEndpoint("/new")}>
+          <MdNewReleases size={20} />
+          <p className="subreddit">Latest</p>
         </div>
       </div>
       <div className="heading-container">
         <p className="subheading-container">Subreddits</p>
-        <div className="subreddits-container">
+        <div id="menu-open-subreddit" className="subreddits-container">
           {loading || Object.keys(defaultSubreddit.data).length === 0 ? (
             <SidebarSkeleton />
           ) : (

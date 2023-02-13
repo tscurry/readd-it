@@ -79,19 +79,19 @@
 
 @media screen and (max-width: 950px) {
   .comments-header h3 {
-    font-size: 21px;
+    font-size: 20px;
   }
   .comments-header span {
     font-size: 14px;
   }
   .comment-body p {
-    font-size: 20px;
-  }
-  .comment-footer p {
     font-size: 16px;
   }
+  .comment-footer p {
+    font-size: 14px;
+  }
   #resizable-icon {
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
   }
 }

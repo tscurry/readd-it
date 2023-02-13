@@ -2,6 +2,8 @@ import React from "react";
 import moment from "moment";
 
 import { useSelector, useDispatch } from "react-redux";
+import { LazyLoadImage, LazyLoadComponent } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 import { TiArrowUpOutline, TiArrowDownOutline } from "react-icons/ti";
 import { GoComment } from "react-icons/go";
@@ -85,8 +87,11 @@ const Feed = () => {
     setDownvoted({ ...downvoted, [id]: !downvoted[id] });
   };
 
-  const isImage = url => {
-    return url.match(/\.(jpeg|jpg|gif|png)$/) !== null;
+  const isImage = url => url.match(/\.(jpeg|jpg|png)$/) !== null;
+
+  const extractUrl = url => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return url.match(urlRegex)[0];
   };
 
   const fetchSubredditIcon = async data => {
@@ -126,19 +131,19 @@ const Feed = () => {
             <div className="votes-container">
               <TiArrowUpOutline
                 size={27}
-                className={`${upvoted[data.data.id] ? "up-voted" : "up-vote"}`}
+                className={`votes-icon ${upvoted[data.data.id] ? "up-voted" : "up-vote"}`}
                 onClick={() => handleUpVote(data.data.id)}
               />
               <p className={upvoted[data.data.id] ? "up-voted" : downvoted[data.data.id] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
               <TiArrowDownOutline
                 size={27}
-                className={`${downvoted[data.data.id] ? "down-voted" : "down-vote"}`}
+                className={`votes-icon ${downvoted[data.data.id] ? "down-voted" : "down-vote"}`}
                 onClick={() => handleDownVote(data.data.id)}
               />
             </div>
             <div className="feed-header">
               {subredditIconUrl[data.data.subreddit_name_prefixed] ? (
-                <img className="feed-icon-img" src={subredditIconUrl[data.data.subreddit_name_prefixed]} alt="subreddit-icon" />
+                <LazyLoadImage className="feed-icon-img" src={subredditIconUrl[data.data.subreddit_name_prefixed]} alt="subreddit-icon" />
               ) : null}
               <p>{data.data.subreddit_name_prefixed}</p>
               <span>Posted by u/{data.data.author} </span>
@@ -147,12 +152,31 @@ const Feed = () => {
             <div className="feed-body">
               <p>{data.data.title}</p>
               {isImage(data.data.url) ? (
-                <img src={data.data.url} alt="subreddit" />
+                <LazyLoadImage style={{ width: "100%", height: "auto" }} effect="blur" src={data.data.url} alt="subreddit" />
               ) : data.data.is_video ? (
-                <video height="auto" width="100%" controls>
-                  <source src={data.data.media.reddit_video.fallback_url} />
-                  <p className="error-media">Sorry, this content cannot be displayed.</p>
-                </video>
+                <LazyLoadComponent>
+                  <iframe
+                    src={extractUrl(data.data.media.reddit_video.fallback_url)}
+                    style={{ border: "none" }}
+                    height="550"
+                    width="100%"
+                    title={data.data.title}
+                    allowFullScreen
+                  ></iframe>
+                </LazyLoadComponent>
+              ) : !data.data.is_video && data.data.media ? (
+                <>
+                  <LazyLoadComponent>
+                    <iframe
+                      src={extractUrl(data.data.media.oembed.html)}
+                      style={{ border: "none" }}
+                      height="550"
+                      width="100%"
+                      title={data.data.media.oembed.title}
+                      allowFullScreen
+                    ></iframe>
+                  </LazyLoadComponent>
+                </>
               ) : null}
             </div>
             <div className="footer">
@@ -180,19 +204,19 @@ const Feed = () => {
             <div className="votes-container">
               <TiArrowUpOutline
                 size={27}
-                className={`${upvoted[data.data.id] ? "up-voted" : "up-vote"}`}
+                className={`votes-icon ${upvoted[data.data.id] ? "up-voted" : "up-vote"}`}
                 onClick={() => handleUpVote(data.data.id)}
               />
               <p className={upvoted[data.data.id] ? "up-voted" : downvoted[data.data.id] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
               <TiArrowDownOutline
                 size={27}
-                className={`${downvoted[data.data.id] ? "down-voted" : "down-vote"}`}
+                className={`votes-icon ${downvoted[data.data.id] ? "down-voted" : "down-vote"}`}
                 onClick={() => handleDownVote(data.data.id)}
               />
             </div>
             <div className="feed-header">
               {subredditIconUrl[data.data.subreddit_name_prefixed] ? (
-                <img className="feed-icon-img" src={subredditIconUrl[data.data.subreddit_name_prefixed]} alt="subreddit-icon" />
+                <LazyLoadImage className="feed-icon-img" src={subredditIconUrl[data.data.subreddit_name_prefixed]} alt="subreddit-icon" />
               ) : null}
               <p>{data.data.subreddit_name_prefixed}</p>
               <span>Posted by u/{data.data.author} </span>
@@ -201,12 +225,31 @@ const Feed = () => {
             <div className="feed-body">
               <p>{data.data.title}</p>
               {isImage(data.data.url) ? (
-                <img src={data.data.url} alt="subreddit" />
+                <LazyLoadImage style={{ width: "100%", height: "auto" }} effect="blur" src={data.data.url} alt="subreddit" />
               ) : data.data.is_video ? (
-                <video height="auto" width="100%" controls>
-                  <source src={data.data.media.reddit_video.fallback_url} />
-                  <p className="error-media">Sorry, this content cannot be displayed.</p>
-                </video>
+                <LazyLoadComponent>
+                  <iframe
+                    src={extractUrl(data.data.media.reddit_video.fallback_url)}
+                    style={{ border: "none" }}
+                    height="550"
+                    width="100%"
+                    title={data.data.title}
+                    allowFullScreen
+                  ></iframe>
+                </LazyLoadComponent>
+              ) : !data.data.is_video && data.data.media ? (
+                <>
+                  <LazyLoadComponent>
+                    <iframe
+                      src={extractUrl(data.data.media.oembed.html)}
+                      style={{ border: "none" }}
+                      height="550"
+                      width="100%"
+                      title={data.data.media.oembed.title}
+                      allowFullScreen
+                    ></iframe>
+                  </LazyLoadComponent>
+                </>
               ) : null}
             </div>
             <div className="footer">
@@ -226,19 +269,24 @@ const Feed = () => {
             <div className="votes-container">
               <TiArrowUpOutline
                 size={27}
-                className={`${upvoted[data.data.id] ? "up-voted" : "up-vote"}`}
+                className={`votes-icon ${upvoted[data.data.id] ? "up-voted" : "up-vote"}`}
                 onClick={() => handleUpVote(data.data.id)}
               />
               <p className={upvoted[data.data.id] ? "up-voted" : downvoted[data.data.id] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
               <TiArrowDownOutline
                 size={27}
-                className={`${downvoted[data.data.id] ? "down-voted" : "down-vote"}`}
+                className={`votes-icon ${downvoted[data.data.id] ? "down-voted" : "down-vote"}`}
                 onClick={() => handleDownVote(data.data.id)}
               />
             </div>
             <div className="feed-header">
               {subredditIconUrl[data.data.subreddit_name_prefixed] ? (
-                <img className="feed-icon-img" src={subredditIconUrl[data.data.subreddit_name_prefixed]} alt="subreddit-icon" />
+                <LazyLoadImage
+                  effect="blur"
+                  className="feed-icon-img"
+                  src={subredditIconUrl[data.data.subreddit_name_prefixed]}
+                  alt="subreddit-icon"
+                />
               ) : null}
               <p>{data.data.subreddit_name_prefixed}</p>
               <span>Posted by u/{data.data.author} </span>
@@ -247,12 +295,31 @@ const Feed = () => {
             <div className="feed-body">
               <p>{data.data.title}</p>
               {isImage(data.data.url) ? (
-                <img src={data.data.url} alt="subreddit" />
+                <LazyLoadImage style={{ width: "100%", height: "auto" }} effect="blur" src={data.data.url} alt="subreddit" />
               ) : data.data.is_video ? (
-                <video height="auto" width="100%" controls>
-                  <source src={data.data.media.reddit_video.fallback_url} />
-                  <p className="error-media">Sorry, this content cannot be displayed.</p>
-                </video>
+                <LazyLoadComponent>
+                  <iframe
+                    src={extractUrl(data.data.media.reddit_video.fallback_url)}
+                    style={{ border: "none" }}
+                    height="550"
+                    width="100%"
+                    title={data.data.title}
+                    allowFullScreen
+                  ></iframe>
+                </LazyLoadComponent>
+              ) : !data.data.is_video && data.data.media ? (
+                <>
+                  <LazyLoadComponent>
+                    <iframe
+                      src={extractUrl(data.data.media.oembed.html)}
+                      style={{ border: "none" }}
+                      height="550"
+                      width="100%"
+                      title={data.data.media.oembed.title}
+                      allowFullScreen
+                    ></iframe>
+                  </LazyLoadComponent>
+                </>
               ) : null}
             </div>
             <div className="footer">
