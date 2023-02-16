@@ -94,4 +94,23 @@
     width: 22px;
     height: 22px;
   }
+
+  @media screen and (max-width: 500px) {
+    .comments-header h3 {
+      font-size: 16px;
+    }
+    .comments-header span {
+      font-size: 12px;
+    }
+    .comment-body p {
+      font-size: 14px;
+    }
+    #resizable-icon {
+      width: 20px;
+      height: 20px;
+    }
+    .comment-footer p {
+      font-size: 12px;
+    }
+  }
 }

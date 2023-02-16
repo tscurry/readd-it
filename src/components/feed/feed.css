@@ -105,10 +105,6 @@
   margin: 0 0 10px 10px;
 }
 
-.lazy-load-image-loaded {
-  width: 100%;
-}
-
 .feed-body a:hover {
   text-decoration: underline;
   color: #6cb4ee;
@@ -151,6 +147,29 @@
   opacity: 0.5;
   font-style: italic;
 }
+
+.search-no-results {
+  font-weight: bold;
+  max-width: 500px;
+  min-width: auto;
+  margin: auto;
+  font-size: 20px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.search-no-results-button {
+  background-color: #000;
+  color: #fff;
+  border: 1.5px solid;
+  border-radius: 8px;
+  display: block;
+  margin: auto;
+  width: 150px;
+  font-size: 15px;
+  padding: 0.8rem;
+  cursor: pointer;
+}
 @media screen and (max-width: 1250px) {
   .box-container {
     margin-left: 50px;
@@ -184,9 +203,6 @@
     font-size: 14px;
   }
   .comments p {
-    font-size: 10px;
-  }
-  .votes-container p {
     font-size: 12px;
   }
   .feed-header p {
@@ -207,6 +223,6 @@
     width: 20px;
   }
   .votes-container p {
-    font-size: 10px;
+    font-size: 12px;
   }
 }

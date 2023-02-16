@@ -51,6 +51,7 @@
 
 .body-skeleton {
   margin-left: 10px;
+  margin-right: auto;
   width: 95%;
   height: 300px;
 }
@@ -64,14 +65,53 @@
 }
 
 .footer-skeleton {
-    height: 30px;
+  height: 30px;
   width: 180px;
   margin-left: 10px;
 }
 
+@media screen and (max-width: 1250px) {
+  .skeleton-container {
+    margin-left: 50px;
+    width: 600px;
+  }
+}
+
 @media screen and (max-width: 950px) {
   .skeleton-container {
-    margin-left: 0;
-    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .header-skeleton {
+    width: 250px;
+  }
+  .skeleton-container {
+    width: 550px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .skeleton-container {
+    width: 400px;
+    height: 250px;
+  }
+  .body-skeleton {
+    height: 150px;
+  }
+  .header-skeleton {
+    width: 200px;
+  }
+  .votes-skeleton {
+    width: 30px;
+  }
+  .footer-skeleton {
+    width: 100px;
+  }
+  .down-vote, .up-vote, .skeleton-comment-icon {
+    width: 20px;
+    height: 20px;
   }
 }

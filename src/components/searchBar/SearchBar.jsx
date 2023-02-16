@@ -13,7 +13,7 @@ const SearchBar = () => {
 
   const handleQuery = e => {
     e.preventDefault();
-    dispatch(searchSlice.actions.setSearched(true));
+    dispatch(searchSlice.actions.setSearched({ searched: true, query: query }));
     dispatch(searchData(query));
     setQuery("");
   };

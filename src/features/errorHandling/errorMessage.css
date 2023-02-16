@@ -1,0 +1,30 @@
+.error-message {
+  font-weight: bold;
+  margin: auto;
+  font-size: 18px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.error-message-feed {
+  font-weight: bold;
+  max-width: 450px;
+  min-width: auto;
+  text-align: center;
+  margin: auto;
+  font-size: 20px;
+  padding: 2rem;
+}
+
+.error-button {
+  background-color: #000;
+  color: #fff;
+  border: 1.5px solid;
+  border-radius: 8px;
+  display: block;
+  margin: auto;
+  width: 120px;
+  font-size: 15px;
+  padding: 0.8rem;
+  cursor: pointer;
+}

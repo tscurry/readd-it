@@ -14,9 +14,11 @@ import Comments from "../comments/Comments";
 import subredditSlice from "../../features/redux/reducers/subreddits";
 
 import { popularData } from "../../features/redux/reducers/popular";
-import { getComments } from "../../features/redux/reducers/subreddits";
+import { getComments, fetchSubreddit } from "../../features/redux/reducers/subreddits";
 
 import "./feed.css";
+import ErrorMessage from "../../features/errorHandling/ErrorMessage";
+import searchSlice from "../../features/redux/reducers/search";
 
 const Feed = () => {
   const [isSubreddit, setIsSubreddit] = React.useState(false);
@@ -87,6 +89,12 @@ const Feed = () => {
     setDownvoted({ ...downvoted, [id]: !downvoted[id] });
   };
 
+  const noResultsSearch = () => {
+    dispatch(searchSlice.actions.resetState());
+    setIsSubreddit(true);
+    dispatch(fetchSubreddit("r/Home"));
+  };
+
   const isImage = url => url.match(/\.(jpeg|jpg|png)$/) !== null;
 
   const extractUrl = url => {
@@ -120,13 +128,15 @@ const Feed = () => {
   };
 
   const popularRendering = () => {
-    if (popular.isLoading) {
-      return Array(5)
+    return popular.error ? (
+      <ErrorMessage component="feed" />
+    ) : popular.isLoading ? (
+      Array(5)
         .fill()
-        .map((_, index) => <FeedSkeleton key={index} />);
-    } else if (popular.data && popular.data.data) {
-      return popular.data.data.children.map((data, index) => (
-        <div className="box-container" key={index}>
+        .map((_, index) => <FeedSkeleton key={index} />)
+    ) : popular.data && popular.data.data ? (
+      popular.data.data.children.map(data => (
+        <div className="box-container" key={data.data.id}>
           <div className="data-container">
             <div className="votes-container">
               <TiArrowUpOutline
@@ -152,7 +162,9 @@ const Feed = () => {
             <div className="feed-body">
               <p>{data.data.title}</p>
               {isImage(data.data.url) ? (
-                <LazyLoadImage style={{ width: "100%", height: "auto" }} effect="blur" src={data.data.url} alt="subreddit" />
+                <div style={{ textAlign: "center" }}>
+                  <LazyLoadImage effect="blur" src={data.data.url} style={{ width: "100%", height: "auto" }} alt="subreddit" />
+                </div>
               ) : data.data.is_video ? (
                 <LazyLoadComponent>
                   <iframe
@@ -188,18 +200,20 @@ const Feed = () => {
             {subreddit.toggleId === data.data.id && <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />}
           </div>
         </div>
-      ));
-    }
+      ))
+    ) : null;
   };
 
   const feedRendering = () => {
-    if (subreddit.isLoading || search.isLoading) {
-      return Array(5)
+    return (search.error || subreddit.error) && !subreddit.isLoading ? (
+      <ErrorMessage component="feed" />
+    ) : subreddit.isLoading || search.isLoading ? (
+      Array(5)
         .fill()
-        .map((_, index) => <FeedSkeleton key={index} />);
-    } else if (isSubreddit && subreddit.data && subreddit.data.data) {
-      return subreddit.data.data.children.map((data, index) => (
-        <div className="box-container" key={index}>
+        .map((_, index) => <FeedSkeleton key={index} />)
+    ) : isSubreddit && subreddit.data && subreddit.data.data ? (
+      subreddit.data.data.children.map(data => (
+        <div className="box-container" key={data.data.id}>
           <div className="data-container">
             <div className="votes-container">
               <TiArrowUpOutline
@@ -225,7 +239,9 @@ const Feed = () => {
             <div className="feed-body">
               <p>{data.data.title}</p>
               {isImage(data.data.url) ? (
-                <LazyLoadImage style={{ width: "100%", height: "auto" }} effect="blur" src={data.data.url} alt="subreddit" />
+                <div style={{ textAlign: "center" }}>
+                  <LazyLoadImage style={{ width: "100%", height: "auto" }} effect="blur" src={data.data.url} alt="subreddit" />
+                </div>
               ) : data.data.is_video ? (
                 <LazyLoadComponent>
                   <iframe
@@ -261,10 +277,10 @@ const Feed = () => {
             {subreddit.toggleId === data.data.id && <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />}
           </div>
         </div>
-      ));
-    } else if (searched && search.data && search.data.data) {
-      return search.data.data.children.map((data, index) => (
-        <div className="box-container" key={index}>
+      ))
+    ) : searched && search.data.data.children.length > 0 ? (
+      search.data.data.children.map(data => (
+        <div className="box-container" key={data.data.id}>
           <div className="data-container">
             <div className="votes-container">
               <TiArrowUpOutline
@@ -295,7 +311,9 @@ const Feed = () => {
             <div className="feed-body">
               <p>{data.data.title}</p>
               {isImage(data.data.url) ? (
-                <LazyLoadImage style={{ width: "100%", height: "auto" }} effect="blur" src={data.data.url} alt="subreddit" />
+                <div style={{ textAlign: "center" }}>
+                  <LazyLoadImage style={{ width: "100%", height: "auto" }} effect="blur" src={data.data.url} alt="subreddit" />
+                </div>
               ) : data.data.is_video ? (
                 <LazyLoadComponent>
                   <iframe
@@ -331,8 +349,15 @@ const Feed = () => {
             {subreddit.toggleId === data.data.id && <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />}
           </div>
         </div>
-      ));
-    }
+      ))
+    ) : search.data.data.children.length === 0 ? (
+      <>
+        <p className="search-no-results">No post matching '{search.searchedItem}' was found.</p>
+        <button className="search-no-results-button" onClick={() => noResultsSearch()}>
+          Back to Home
+        </button>
+      </>
+    ) : null;
   };
 
   return (

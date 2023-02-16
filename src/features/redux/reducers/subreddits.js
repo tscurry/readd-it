@@ -1,31 +1,40 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const fetchSubreddit = createAsyncThunk("subreddits", async subreddit => {
-  const data = await fetch(`https://www.reddit.com/${subreddit}.json?limit=100`);
-  const json = await data.json();
-  return json;
+export const fetchSubreddit = createAsyncThunk("subreddits", async (subreddit, { rejectWithValue }) => {
+  try {
+    const data = await fetch(`https://www.reddit.com/${subreddit}.json?show=all`);
+    const json = await data.json();
+    return json;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
 });
 
-export const getComments = createAsyncThunk("getComments", async params => {
+export const getComments = createAsyncThunk("getComments", async (params, { rejectWithValue }) => {
   let { subText, id, limit } = params;
-  const data = await fetch(`https://www.reddit.com/${subText}/comments/${id}.json?limit=${limit}`);
-  const json = await data.json();
-
-  return json[1].data.children;
+  try {
+    const data = await fetch(`https://www.reddit.com/${subText}/comments/${id}.json?limit=${limit}`);
+    const json = await data.json();
+    return json[1].data.children;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });
+
+const initialState = {
+  isLoading: false,
+  error: null,
+  isClicked: false,
+  data: {},
+  commentsLoading: false,
+  postComments: {},
+  toggleId: "",
+  limit: 10,
+};
 
 const subredditSlice = createSlice({
   name: "subreddits",
-  initialState: {
-    isLoading: false,
-    error: null,
-    isClicked: false,
-    data: {},
-    commentsLoading: false,
-    postComments: {},
-    toggleId: "",
-    limit: 10,
-  },
+  initialState,
   reducers: {
     setIsClicked: (state, action) => {
       state.isClicked = action.payload;
@@ -42,11 +51,13 @@ const subredditSlice = createSlice({
     },
     resetLimit: (state, action) => {
       state.limit = action.payload;
-    }
+    },
+    resetState: () => initialState,
   },
   extraReducers: builder => {
     builder.addCase(fetchSubreddit.pending, state => {
       state.isLoading = true;
+      state.error = null;
     });
     builder.addCase(fetchSubreddit.fulfilled, (state, action) => {
       state.data = action.payload;

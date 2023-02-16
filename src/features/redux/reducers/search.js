@@ -1,23 +1,34 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const searchData = createAsyncThunk("search", async query => {
-  const data = await fetch(`https://www.reddit.com/search.json?q=${query}`);
-  const json = await data.json();
-  return json;
+export const searchData = createAsyncThunk("search", async (query, { rejectWithValue }) => {
+  try {
+    const data = await fetch(`https://www.reddit.com/search.json?q=${query}&show=all`);
+    const json = await data.json();
+    return json;
+  } catch (error) {
+    console.log('hi');
+    return rejectWithValue(error);
+  }
 });
+
+const initialState = {
+  isLoading: false,
+  isSearched: false,
+  searchedItem: "",
+  error: null,
+  data: [],
+};
 
 const searchSlice = createSlice({
   name: "search",
-  initialState: {
-    isLoading: false,
-    isSearched: false,
-    error: null,
-    data: [],
-  },
+  initialState,
   reducers: {
     setSearched: (state, action) => {
-      state.isSearched = action.payload;
+      const { searched, query } = action.payload;
+      state.isSearched = searched;
+      state.searchedItem = query ? query : null;
     },
+    resetState: () => initialState,
   },
   extraReducers: builder => {
     builder.addCase(searchData.pending, state => {
@@ -31,6 +42,7 @@ const searchSlice = createSlice({
     });
     builder.addCase(searchData.rejected, (state, action) => {
       state.error = action.error.message;
+      state.isLoading = false;
     });
   },
 });
