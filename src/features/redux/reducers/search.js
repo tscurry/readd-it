@@ -6,7 +6,7 @@ export const searchData = createAsyncThunk("search", async (query, { rejectWithV
     const json = await data.json();
     return json;
   } catch (error) {
-    console.log('hi');
+    console.log(error);
     return rejectWithValue(error);
   }
 });

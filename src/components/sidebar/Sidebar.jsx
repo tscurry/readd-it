@@ -39,6 +39,7 @@ const Sidebar = () => {
   const handleEndpoint = end => {
     setIsEndpointSet(true);
     dispatch(fetchSubreddit(end));
+    dispatch(subredditSlice.actions.setSubreddit(end));
     dispatch(subredditSlice.actions.setIsClicked(true));
   };
 
@@ -62,7 +63,6 @@ const Sidebar = () => {
       <div className="heading-container">
         <p className="subheading-container">Subreddits</p>
         <div id="menu-open-subreddit" className="subreddits-container">
-          <div></div>
           {defaultSubreddit.error ? (
             <ErrorMessage component="sidebar" />
           ) : defaultSubreddit.isLoading ? (

@@ -102,7 +102,7 @@
     .comments-header span {
       font-size: 12px;
     }
-    .comment-body p {
+    .comment-body p, .comments-data p {
       font-size: 14px;
     }
     #resizable-icon {

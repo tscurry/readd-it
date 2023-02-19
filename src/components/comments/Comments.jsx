@@ -16,6 +16,7 @@ const Comments = ({ subText, id }) => {
   const [downvoted, setDownvoted] = React.useState({});
   const [view, setView] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [defaultView, setDefaultView] = React.useState(true);
 
   const dispatch = useDispatch();
 
@@ -46,6 +47,7 @@ const Comments = ({ subText, id }) => {
   };
 
   const viewMore = () => {
+    setDefaultView(false);
     setView(true);
     setLoading(true);
     dispatch(subredditSlice.actions.increaseLimit(15));
@@ -69,11 +71,7 @@ const Comments = ({ subText, id }) => {
   return (
     <>
       <div className="comments-container">
-        {comments.error ? (
-          <div className="comments-data">
-            <p className="comment-body">{comments.error}</p>
-          </div>
-        ) : comments.commentsLoading && !loading ? (
+        {defaultView && comments.commentsLoading ? (
           Array(1)
             .fill()
             .map((_, index) => <CommentsSkeleton key={index} />)

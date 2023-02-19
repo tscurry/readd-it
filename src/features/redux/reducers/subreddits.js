@@ -17,7 +17,8 @@ export const getComments = createAsyncThunk("getComments", async (params, { reje
     const json = await data.json();
     return json[1].data.children;
   } catch (error) {
-    return rejectWithValue(error.response.data);
+    console.log(rejectWithValue(error));
+    return rejectWithValue(error);
   }
 });
 
@@ -27,8 +28,10 @@ const initialState = {
   isClicked: false,
   data: {},
   commentsLoading: false,
+  commentsError: null,
   postComments: {},
   toggleId: "",
+  selectedSubreddit: "",
   limit: 10,
 };
 
@@ -38,6 +41,9 @@ const subredditSlice = createSlice({
   reducers: {
     setIsClicked: (state, action) => {
       state.isClicked = action.payload;
+    },
+    setSubreddit: (state, action) => {
+      state.selectedSubreddit = action.payload;
     },
     toggleId: (state, action) => {
       if (state.toggleId !== action.payload) {
@@ -74,11 +80,11 @@ const subredditSlice = createSlice({
     });
     builder.addCase(getComments.fulfilled, (state, action) => {
       state.commentsLoading = false;
-      state.error = null;
+      state.commentsError = null;
       state.postComments = action.payload;
     });
     builder.addCase(getComments.rejected, (state, action) => {
-      state.error = action.error.message;
+      state.commentsError = action.error.message;
       state.commentsLoading = false;
     });
   },

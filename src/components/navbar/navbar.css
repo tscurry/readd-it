@@ -34,6 +34,7 @@
   width: 275px;
   background-color: #fff;
   height: 100vh;
+  display: none;
 }
 
 .nothing-found {
@@ -49,6 +50,9 @@
 @media screen and (max-width: 950px) {
   .navbar-header-content h1 {
     margin-right: 0;
+  }
+  .menu-open {
+    display: block;
   }
   .hamburg-menu {
     display: block;

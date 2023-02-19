@@ -45,10 +45,12 @@ const Feed = () => {
         setShowFeed(true);
         setSearched(false);
         setIsSubreddit(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
       } else if (search.isSearched) {
         setShowFeed(true);
         setIsSubreddit(false);
         setSearched(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     } catch (error) {
       console.log(error);
@@ -92,7 +94,7 @@ const Feed = () => {
   const noResultsSearch = () => {
     dispatch(searchSlice.actions.resetState());
     setIsSubreddit(true);
-    dispatch(fetchSubreddit("r/Home"));
+    dispatch(fetchSubreddit(!subreddit.selectedSubreddit ? "r/Popular" : subreddit.selectedSubreddit));
   };
 
   const isImage = url => url.match(/\.(jpeg|jpg|png)$/) !== null;
@@ -197,7 +199,9 @@ const Feed = () => {
                 <p>{formatNumber(data.data.num_comments)} Comments</p>
               </div>
             </div>
-            {subreddit.toggleId === data.data.id && <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />}
+            {!subreddit.commentsError && subreddit.toggleId === data.data.id && (
+              <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />
+            )}
           </div>
         </div>
       ))
@@ -205,7 +209,7 @@ const Feed = () => {
   };
 
   const feedRendering = () => {
-    return (search.error || subreddit.error) && !subreddit.isLoading ? (
+    return subreddit.error ? (
       <ErrorMessage component="feed" />
     ) : subreddit.isLoading || search.isLoading ? (
       Array(5)
@@ -274,10 +278,14 @@ const Feed = () => {
                 <p>{formatNumber(data.data.num_comments)} Comments</p>
               </div>
             </div>
-            {subreddit.toggleId === data.data.id && <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />}
+            {!subreddit.commentsError && subreddit.toggleId === data.data.id && (
+              <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />
+            )}
           </div>
         </div>
       ))
+    ) : search.error ? (
+      <ErrorMessage component="search" />
     ) : searched && search.data.data.children.length > 0 ? (
       search.data.data.children.map(data => (
         <div className="box-container" key={data.data.id}>
@@ -346,7 +354,9 @@ const Feed = () => {
                 <p>{formatNumber(data.data.num_comments)} Comments</p>
               </div>
             </div>
-            {subreddit.toggleId === data.data.id && <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />}
+            {!subreddit.commentsError && subreddit.toggleId === data.data.id && (
+              <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />
+            )}
           </div>
         </div>
       ))
