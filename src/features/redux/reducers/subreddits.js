@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchSubreddit = createAsyncThunk("subreddits", async (subreddit, { rejectWithValue }) => {
   try {
-    const data = await fetch(`https://www.reddit.com/${subreddit}.json?show=all`);
+    const data = await fetch(`https://www.reddit.com/${subreddit}.json?limit=100`);
     const json = await data.json();
     return json;
   } catch (error) {

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const popularData = createAsyncThunk("popular", async (_, { rejectWithValue }) => {
   try {
-    const data = await fetch("https://www.reddit.com/r/popular.json?show=all");
+    const data = await fetch("https://www.reddit.com/r/popular.json?limit=100");
     const json = await data.json();
     return json;
   } catch (error) {

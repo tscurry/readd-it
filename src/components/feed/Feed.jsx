@@ -36,6 +36,7 @@ const Feed = () => {
 
   React.useEffect(() => {
     dispatch(popularData());
+    window.scrollTo({ top: 0, behavior: "smooth" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -172,7 +173,7 @@ const Feed = () => {
                   <iframe
                     src={extractUrl(data.data.media.reddit_video.fallback_url)}
                     style={{ border: "none" }}
-                    height="550"
+                    height="auto"
                     width="100%"
                     title={data.data.title}
                     allowFullScreen
@@ -251,7 +252,7 @@ const Feed = () => {
                   <iframe
                     src={extractUrl(data.data.media.reddit_video.fallback_url)}
                     style={{ border: "none" }}
-                    height="550"
+                    height="auto"
                     width="100%"
                     title={data.data.title}
                     allowFullScreen

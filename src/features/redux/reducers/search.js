@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const searchData = createAsyncThunk("search", async (query, { rejectWithValue }) => {
   try {
-    const data = await fetch(`https://www.reddit.com/search.json?q=${query}&show=all`);
+    const data = await fetch(`https://www.reddit.com/search.json?q=${query}&limit=100`);
     const json = await data.json();
     return json;
   } catch (error) {

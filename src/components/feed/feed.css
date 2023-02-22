@@ -201,6 +201,7 @@
 
 @media screen and (max-width: 500px) {
   .feed-body p {
+    margin-left: 5px;
     font-size: 14px;
   }
   .comments p {
@@ -211,6 +212,7 @@
     margin-right: 15px;
   }
   .feed-header {
+    margin-left: 5px;
     width: 100%;
   }
   .feed-header span {
@@ -222,6 +224,13 @@
   .comment-icon {
     height: 20px;
     width: 20px;
+  }
+
+  .footer {
+    padding-left: 10px;
+  }
+  .data-container {
+    grid-template-columns: 50px minmax(auto, auto);
   }
   .votes-container p {
     font-size: 12px;

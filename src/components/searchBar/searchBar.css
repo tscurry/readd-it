@@ -24,6 +24,10 @@
   .searchbar input {
     font-size: 12px;
   }
+
+  .searchbar input:focus {
+    font-size: 16px;
+  }
   .search-icon {
     width: 15px;
     height: 15px;
