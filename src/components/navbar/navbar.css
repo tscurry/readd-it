@@ -16,9 +16,10 @@
   align-items: center;
 }
 
-.navbar-header-content h1 {
+.navbar-header-content a {
   font-family: var(--logo-text);
   font-weight: 100;
+  cursor: pointer;
 
   margin-right: 5rem;
 }

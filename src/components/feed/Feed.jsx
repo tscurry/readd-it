@@ -9,7 +9,7 @@ import TopButton from "../../features/backToTop/topButton";
 import FeedSkeleton from "../../features/skeletons/feed/feedSkeleton";
 import Comments from "../comments/Comments";
 import subredditSlice from "../../features/redux/reducers/subreddits";
-import { popularData, seeMorePopularData } from "../../features/redux/reducers/popular";
+import { popularData } from "../../features/redux/reducers/popular";
 import { getComments, fetchSubreddit } from "../../features/redux/reducers/subreddits";
 import "./feed.css";
 import ErrorMessage from "../../features/errorHandling/ErrorMessage";

@@ -94,7 +94,9 @@ const Navbar = () => {
   return (
     <div className="navbar-container">
       <div className="navbar-header-content">
-        <h1>readd-it</h1>
+        <h1>
+          <a href="https://www.readd-it.com">readd-it</a>
+        </h1>
         <SearchBar />
         {click ? (
           <RiCloseFill size={40} className="hamburg-menu" onClick={() => setClick(!click)} />
