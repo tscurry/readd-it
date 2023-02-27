@@ -1,21 +1,16 @@
 import React from "react";
 import moment from "moment";
-
 import { useSelector, useDispatch } from "react-redux";
 import { LazyLoadImage, LazyLoadComponent } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-
 import { TiArrowUpOutline, TiArrowDownOutline } from "react-icons/ti";
 import { GoComment } from "react-icons/go";
-
 import TopButton from "../../features/backToTop/topButton";
 import FeedSkeleton from "../../features/skeletons/feed/feedSkeleton";
 import Comments from "../comments/Comments";
 import subredditSlice from "../../features/redux/reducers/subreddits";
-
-import { popularData } from "../../features/redux/reducers/popular";
+import { popularData, seeMorePopularData } from "../../features/redux/reducers/popular";
 import { getComments, fetchSubreddit } from "../../features/redux/reducers/subreddits";
-
 import "./feed.css";
 import ErrorMessage from "../../features/errorHandling/ErrorMessage";
 import searchSlice from "../../features/redux/reducers/search";
@@ -39,6 +34,7 @@ const Feed = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   React.useEffect(() => {
     try {
@@ -173,7 +169,7 @@ const Feed = () => {
                   <iframe
                     src={extractUrl(data.data.media.reddit_video.fallback_url)}
                     style={{ border: "none" }}
-                    height="auto"
+                    height="550"
                     width="100%"
                     title={data.data.title}
                     allowFullScreen
@@ -252,7 +248,7 @@ const Feed = () => {
                   <iframe
                     src={extractUrl(data.data.media.reddit_video.fallback_url)}
                     style={{ border: "none" }}
-                    height="auto"
+                    height="550"
                     width="100%"
                     title={data.data.title}
                     allowFullScreen

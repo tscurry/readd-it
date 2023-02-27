@@ -68,7 +68,7 @@ const subredditSlice = createSlice({
     builder.addCase(fetchSubreddit.fulfilled, (state, action) => {
       state.data = action.payload;
       state.isClicked = false;
-      state.error = null;
+      state.error = action.payload.error ? action.payload.message : null;
       state.isLoading = false;
     });
     builder.addCase(fetchSubreddit.rejected, (state, action) => {

@@ -37,7 +37,7 @@ const searchSlice = createSlice({
     builder.addCase(searchData.fulfilled, (state, action) => {
       state.data = action.payload;
       state.isSearched = false;
-      state.error = null;
+      state.error = action.payload.error ? action.payload.message : null;
       state.isLoading = false;
     });
     builder.addCase(searchData.rejected, (state, action) => {
