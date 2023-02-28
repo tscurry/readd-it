@@ -68,9 +68,18 @@ const Comments = ({ subText, id }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newLimit, view]);
 
+  React.useEffect(() => {
+    const clickedComment = document.getElementById("container");
+    const getScrolledLocation = clickedComment.getBoundingClientRect();
+    window.scrollTo({
+      top: window.scrollY + getScrolledLocation.top - 150,
+      behavior: "smooth",
+    });
+  }, []);
+
   return (
     <>
-      <div className="comments-container">
+      <div className="comments-container" id="container">
         {defaultView && comments.commentsLoading ? (
           Array(1)
             .fill()

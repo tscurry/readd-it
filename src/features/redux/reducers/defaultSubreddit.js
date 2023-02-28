@@ -10,14 +10,18 @@ export const fetchDefaultSubreddits = createAsyncThunk("default", async (_, { re
   }
 });
 
+const initialState = {
+  isLoading: false,
+  error: null,
+  data: {},
+};
+
 const defaultSlice = createSlice({
   name: "subreddits",
-  initialState: {
-    isLoading: false,
-    error: null,
-    data: {},
+  initialState,
+  reducers: {
+    resetState: () => initialState,
   },
-  reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchDefaultSubreddits.pending, state => {
       state.isLoading = true;

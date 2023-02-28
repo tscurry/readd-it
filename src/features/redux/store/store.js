@@ -1,7 +1,4 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-
 import { defaultSlice, searchSlice, popularSlice, subredditSlice } from "../reducers/index";
 
 const rootReducer = combineReducers({
@@ -11,22 +8,6 @@ const rootReducer = combineReducers({
   subreddits: subredditSlice.reducer,
 });
 
-const persistConfig = {
-  key: "persist-key",
-  storage,
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, PAUSE, PURGE, REGISTER, REHYDRATE, PERSIST],
-        immutableStateInvariant: []
-      },
-    }),
+  reducer: rootReducer,
 });
-
-export const persistor = persistStore(store);

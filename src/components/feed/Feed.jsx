@@ -9,7 +9,7 @@ import TopButton from "../../features/backToTop/topButton";
 import FeedSkeleton from "../../features/skeletons/feed/feedSkeleton";
 import Comments from "../comments/Comments";
 import subredditSlice from "../../features/redux/reducers/subreddits";
-import { popularData } from "../../features/redux/reducers/popular";
+import popularSlice, { popularData } from "../../features/redux/reducers/popular";
 import { getComments, fetchSubreddit } from "../../features/redux/reducers/subreddits";
 import "./feed.css";
 import ErrorMessage from "../../features/errorHandling/ErrorMessage";
@@ -30,15 +30,18 @@ const Feed = () => {
   const search = useSelector(state => state.search);
 
   React.useEffect(() => {
+    dispatch(popularSlice.actions.resetState);
+    dispatch(subredditSlice.actions.resetState);
+    dispatch(searchSlice.actions.resetState);
     dispatch(popularData());
     window.scrollTo({ top: 0, behavior: "smooth" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   React.useEffect(() => {
     try {
       if (subreddit.isClicked) {
+        dispatch(searchSlice.actions.resetState());
         setShowFeed(true);
         setSearched(false);
         setIsSubreddit(true);
@@ -52,6 +55,7 @@ const Feed = () => {
     } catch (error) {
       console.log(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subreddit.isClicked, search.isSearched]);
 
   React.useEffect(() => {
