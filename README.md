@@ -1,8 +1,6 @@
-# readd-it
+# [readd-it](https://readd-it.com)
 
 A reddit clone with basic functionality that utilizes the Reddit JSON API to mimic the reddit website but created with minimal functionality. Some minimal functionalities include: viewing and interacting with posts from the API, searching, viewing comments and voting without the actual implementation, so it doesn't affect the overall score. 
-
-Videos are loaded but with no audio, except those from Youtube.
 
 ## Installation
 

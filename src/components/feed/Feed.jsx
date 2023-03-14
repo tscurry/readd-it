@@ -138,74 +138,65 @@ const Feed = () => {
         .fill()
         .map((_, index) => <FeedSkeleton key={index} />)
     ) : popular.data && popular.data.data ? (
-      popular.data.data.children.map(data => (
-        <div className="box-container" key={data.data.id}>
-          <div className="data-container">
-            <div className="votes-container">
-              <TiArrowUpOutline
-                size={27}
-                className={`votes-icon ${upvoted[data.data.id] ? "up-voted" : "up-vote"}`}
-                onClick={() => handleUpVote(data.data.id)}
-              />
-              <p className={upvoted[data.data.id] ? "up-voted" : downvoted[data.data.id] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
-              <TiArrowDownOutline
-                size={27}
-                className={`votes-icon ${downvoted[data.data.id] ? "down-voted" : "down-vote"}`}
-                onClick={() => handleDownVote(data.data.id)}
-              />
-            </div>
-            <div className="feed-header">
-              {subredditIconUrl[data.data.subreddit_name_prefixed] ? (
-                <LazyLoadImage className="feed-icon-img" src={subredditIconUrl[data.data.subreddit_name_prefixed]} alt="subreddit-icon" />
-              ) : null}
-              <p>{data.data.subreddit_name_prefixed}</p>
-              <span>Posted by u/{data.data.author} </span>
-              <span>{formatDate(data.data.created_utc)}</span>
-            </div>
-            <div className="feed-body">
-              <p>{data.data.title}</p>
-              {isImage(data.data.url) ? (
-                <div style={{ textAlign: "center" }}>
-                  <LazyLoadImage effect="blur" src={data.data.url} style={{ width: "100%", height: "auto" }} alt="subreddit" />
-                </div>
-              ) : data.data.is_video ? (
-                <LazyLoadComponent>
-                  <iframe
-                    src={extractUrl(data.data.media.reddit_video.fallback_url)}
-                    style={{ border: "none" }}
-                    height="550"
-                    width="100%"
-                    title={data.data.title}
-                    allowFullScreen
-                  ></iframe>
-                </LazyLoadComponent>
-              ) : !data.data.is_video && data.data.media ? (
-                <>
-                  <LazyLoadComponent>
-                    <iframe
-                      src={extractUrl(data.data.media.oembed.html)}
-                      style={{ border: "none" }}
-                      height="550"
-                      width="100%"
-                      title={data.data.media.oembed.title}
-                      allowFullScreen
-                    ></iframe>
-                  </LazyLoadComponent>
-                </>
-              ) : null}
-            </div>
-            <div className="footer">
-              <div className="comments" onClick={() => handleComments(data.data.subreddit_name_prefixed, data.data.id)}>
-                <GoComment size={25} className="comment-icon" />
-                <p>{formatNumber(data.data.num_comments)} Comments</p>
+      popular.data.data.children
+        .filter(data => data.data.is_video === false)
+        .map(data => (
+          <div className="box-container" key={data.data.id}>
+            <div className="data-container">
+              <div className="votes-container">
+                <TiArrowUpOutline
+                  size={27}
+                  className={`votes-icon ${upvoted[data.data.id] ? "up-voted" : "up-vote"}`}
+                  onClick={() => handleUpVote(data.data.id)}
+                />
+                <p className={upvoted[data.data.id] ? "up-voted" : downvoted[data.data.id] ? "down-voted" : ""}>{formatNumber(data.data.score)}</p>
+                <TiArrowDownOutline
+                  size={27}
+                  className={`votes-icon ${downvoted[data.data.id] ? "down-voted" : "down-vote"}`}
+                  onClick={() => handleDownVote(data.data.id)}
+                />
               </div>
+              <div className="feed-header">
+                {subredditIconUrl[data.data.subreddit_name_prefixed] ? (
+                  <LazyLoadImage className="feed-icon-img" src={subredditIconUrl[data.data.subreddit_name_prefixed]} alt="subreddit-icon" />
+                ) : null}
+                <p>{data.data.subreddit_name_prefixed}</p>
+                <span>Posted by u/{data.data.author} </span>
+                <span>{formatDate(data.data.created_utc)}</span>
+              </div>
+              <div className="feed-body">
+                <p>{data.data.title}</p>
+                {isImage(data.data.url) ? (
+                  <div style={{ textAlign: "center" }}>
+                    <LazyLoadImage effect="blur" src={data.data.url} style={{ width: "100%", height: "auto" }} alt="subreddit" />
+                  </div>
+                ) : data.data.media ? (
+                  <>
+                    <LazyLoadComponent>
+                      <iframe
+                        src={extractUrl(data.data.media.oembed.html)}
+                        style={{ border: "none" }}
+                        height="550"
+                        width="100%"
+                        title={data.data.media.oembed.title}
+                        allowFullScreen
+                      ></iframe>
+                    </LazyLoadComponent>
+                  </>
+                ) : null}
+              </div>
+              <div className="footer">
+                <div className="comments" onClick={() => handleComments(data.data.subreddit_name_prefixed, data.data.id)}>
+                  <GoComment size={25} className="comment-icon" />
+                  <p>{formatNumber(data.data.num_comments)} Comments</p>
+                </div>
+              </div>
+              {!subreddit.commentsError && subreddit.toggleId === data.data.id && (
+                <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />
+              )}
             </div>
-            {!subreddit.commentsError && subreddit.toggleId === data.data.id && (
-              <Comments id={data.data.id} subText={data.data.subreddit_name_prefixed} />
-            )}
           </div>
-        </div>
-      ))
+        ))
     ) : null;
   };
 
@@ -245,20 +236,9 @@ const Feed = () => {
               <p>{data.data.title}</p>
               {isImage(data.data.url) ? (
                 <div style={{ textAlign: "center" }}>
-                  <LazyLoadImage style={{ width: "100%", height: "auto" }} effect="blur" src={data.data.url} alt="subreddit" />
+                  <LazyLoadImage effect="blur" src={data.data.url} style={{ width: "100%", height: "auto" }} alt="subreddit" />
                 </div>
-              ) : data.data.is_video ? (
-                <LazyLoadComponent>
-                  <iframe
-                    src={extractUrl(data.data.media.reddit_video.fallback_url)}
-                    style={{ border: "none" }}
-                    height="550"
-                    width="100%"
-                    title={data.data.title}
-                    allowFullScreen
-                  ></iframe>
-                </LazyLoadComponent>
-              ) : !data.data.is_video && data.data.media ? (
+              ) : data.data.media ? (
                 <>
                   <LazyLoadComponent>
                     <iframe
@@ -321,20 +301,9 @@ const Feed = () => {
               <p>{data.data.title}</p>
               {isImage(data.data.url) ? (
                 <div style={{ textAlign: "center" }}>
-                  <LazyLoadImage style={{ width: "100%", height: "auto" }} effect="blur" src={data.data.url} alt="subreddit" />
+                  <LazyLoadImage effect="blur" src={data.data.url} style={{ width: "100%", height: "auto" }} alt="subreddit" />
                 </div>
-              ) : data.data.is_video ? (
-                <LazyLoadComponent>
-                  <iframe
-                    src={extractUrl(data.data.media.reddit_video.fallback_url)}
-                    style={{ border: "none" }}
-                    height="550"
-                    width="100%"
-                    title={data.data.title}
-                    allowFullScreen
-                  ></iframe>
-                </LazyLoadComponent>
-              ) : !data.data.is_video && data.data.media ? (
+              ) : data.data.media ? (
                 <>
                   <LazyLoadComponent>
                     <iframe
