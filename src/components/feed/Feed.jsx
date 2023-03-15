@@ -170,7 +170,7 @@ const Feed = () => {
                   <div style={{ textAlign: "center" }}>
                     <LazyLoadImage effect="blur" src={data.data.url} style={{ width: "100%", height: "auto" }} alt="subreddit" />
                   </div>
-                ) : data.data.media ? (
+                ) : data.data.media && data.data.media.oembed ? (
                   <>
                     <LazyLoadComponent>
                       <iframe
@@ -238,7 +238,7 @@ const Feed = () => {
                 <div style={{ textAlign: "center" }}>
                   <LazyLoadImage effect="blur" src={data.data.url} style={{ width: "100%", height: "auto" }} alt="subreddit" />
                 </div>
-              ) : data.data.media ? (
+              ) : data.data.media && data.data.media.oembed ? (
                 <>
                   <LazyLoadComponent>
                     <iframe
@@ -303,7 +303,7 @@ const Feed = () => {
                 <div style={{ textAlign: "center" }}>
                   <LazyLoadImage effect="blur" src={data.data.url} style={{ width: "100%", height: "auto" }} alt="subreddit" />
                 </div>
-              ) : data.data.media ? (
+              ) : data.data.media && data.data.media.oembed ? (
                 <>
                   <LazyLoadComponent>
                     <iframe
