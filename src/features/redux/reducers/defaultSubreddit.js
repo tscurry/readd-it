@@ -29,7 +29,7 @@ const defaultSlice = createSlice({
     });
     builder.addCase(fetchDefaultSubreddits.fulfilled, (state, action) => {
       state.data = action.payload;
-      state.error = null;
+      state.error = action.payload.error ? action.payload.message : null;
       state.isLoading = false;
     });
     builder.addCase(fetchDefaultSubreddits.rejected, (state, action) => {

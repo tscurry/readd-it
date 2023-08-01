@@ -2,7 +2,7 @@ import React from "react";
 import SearchBar from "../searchBar/SearchBar";
 
 import SidebarSkeleton from "../../features/skeletons/sidebar/sidebarSkeleton";
-import { fetchDefaultSubreddits } from "../../features/redux/reducers/defaultSubreddit";
+// import { fetchDefaultSubreddits } from "../../features/redux/reducers/defaultSubreddit";
 import { fetchSubreddit } from "../../features/redux/reducers/subreddits";
 import subredditSlice from "../../features/redux/reducers/subreddits";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,31 +15,14 @@ import "./navbar.css";
 
 const Navbar = () => {
   const [click, setClick] = React.useState(false);
-  const [isEndpointSet, setIsEndpointSet] = React.useState(false);
+  // const [isEndpointSet, setIsEndpointSet] = React.useState(false);
 
   const dispatch = useDispatch();
 
   const subreddits = useSelector(state => state.default);
   const loading = useSelector(state => state.default.isLoading);
 
-  React.useEffect(() => {
-    try {
-      if (!isEndpointSet) {
-        dispatch(fetchDefaultSubreddits());
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [dispatch, isEndpointSet]);
-
-  React.useEffect(() => {
-    return () => {
-      setIsEndpointSet(false);
-    };
-  }, []);
-
   const handleEndpoint = end => {
-    setIsEndpointSet(true);
     setClick(false);
     dispatch(fetchSubreddit(end));
     dispatch(subredditSlice.actions.setIsClicked(true));
@@ -48,7 +31,6 @@ const Navbar = () => {
   const menuOpen = () => {
     return (
       <div className="menu-open">
-        {/* sidebar.css is already imbedded in project so dont need to replicate styles*/}
         <div className="heading-container">
           <p className="subheading-container">Feeds</p>
           <div className="content-container" onClick={() => handleEndpoint("r/Home")}>

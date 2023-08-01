@@ -2,22 +2,26 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchSubreddit = createAsyncThunk("subreddits", async (subreddit, { rejectWithValue }) => {
   try {
+    if (!subreddit) {
+      subreddit = "r/Popular";
+    }
     const data = await fetch(`https://www.reddit.com/${subreddit}.json?limit=100`);
     const json = await data.json();
     return json;
   } catch (error) {
-    return rejectWithValue(error);
+    return subreddit.rejectWithValue(error);
   }
 });
 
 export const getComments = createAsyncThunk("getComments", async (params, { rejectWithValue }) => {
   let { subText, id, limit } = params;
   try {
+    console.log(params);
     const data = await fetch(`https://www.reddit.com/${subText}/comments/${id}.json?limit=${limit}`);
     const json = await data.json();
+    console.log(json);
     return json[1].data.children;
   } catch (error) {
-    console.log(rejectWithValue(error));
     return rejectWithValue(error);
   }
 });

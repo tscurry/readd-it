@@ -14,30 +14,15 @@ import "./sidebar.css";
 import ErrorMessage from "../../features/errorHandling/ErrorMessage";
 
 const Sidebar = () => {
-  const [isEndpointSet, setIsEndpointSet] = React.useState(false);
-
-  const dispatch = useDispatch();
-
+  const dispatch = useDispatch(); 
   const defaultSubreddit = useSelector(state => state.default);
 
   React.useEffect(() => {
-    try {
-      if (!isEndpointSet) {
-        dispatch(fetchDefaultSubreddits());
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [dispatch, isEndpointSet]);
-
-  React.useEffect(() => {
-    return () => {
-      setIsEndpointSet(false);
-    };
+    dispatch(fetchDefaultSubreddits());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleEndpoint = end => {
-    setIsEndpointSet(true);
     dispatch(fetchSubreddit(end));
     dispatch(subredditSlice.actions.setSubreddit(end));
     dispatch(subredditSlice.actions.setIsClicked(true));
@@ -55,7 +40,7 @@ const Sidebar = () => {
           <BiTrendingUp size={20} />
           <p className="subreddit">Popular</p>
         </div>
-        <div className="content-container" onClick={() => handleEndpoint("/new")}>
+        <div className="content-container" onClick={() => handleEndpoint("new")}>
           <MdNewReleases size={20} />
           <p className="subreddit">Latest</p>
         </div>
