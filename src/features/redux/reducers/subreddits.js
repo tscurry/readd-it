@@ -16,10 +16,8 @@ export const fetchSubreddit = createAsyncThunk("subreddits", async (subreddit, {
 export const getComments = createAsyncThunk("getComments", async (params, { rejectWithValue }) => {
   let { subText, id, limit } = params;
   try {
-    console.log(params);
     const data = await fetch(`https://www.reddit.com/${subText}/comments/${id}.json?limit=${limit}`);
     const json = await data.json();
-    console.log(json);
     return json[1].data.children;
   } catch (error) {
     return rejectWithValue(error);

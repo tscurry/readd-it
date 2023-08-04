@@ -80,11 +80,16 @@ const Comments = ({ subText, id }) => {
   return (
     <>
       <div className="comments-container" id="container">
-        {defaultView && comments.commentsLoading ? (
+        {comments.commentsError ? (
+          <div className="comments-data">
+            <p className="comment-body">Error loading comments</p>
+          </div>
+        ) : defaultView && comments.commentsLoading ? (
           Array(1)
             .fill()
             .map((_, index) => <CommentsSkeleton key={index} />)
-        ) : comments.postComments.length > 0 ? (
+        ) : (
+          comments.postComments.length > 0 &&
           comments.postComments.map((commentsData, index) => (
             <div key={index}>
               {commentsData.kind === "more" ? (
@@ -121,10 +126,6 @@ const Comments = ({ subText, id }) => {
               )}
             </div>
           ))
-        ) : (
-          <div className="comments-data">
-            <p className="comment-body">No comments found.</p>
-          </div>
         )}
       </div>
     </>

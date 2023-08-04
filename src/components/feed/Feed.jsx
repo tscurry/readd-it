@@ -17,7 +17,7 @@ import searchSlice from "../../features/redux/reducers/search";
 
 const PostItem = ({ post, subredditIconUrl, globalActions, subreddit }) => {
   const [upvoted, setUpvoted] = React.useState({});
-  const [downvoted, setDownvoted] = React.useState({});
+  const [downvoted, setDownvoted] = React.useState({}); 
 
   const formatNumber = num => {
     if (num >= 1000) {
@@ -96,7 +96,7 @@ const PostItem = ({ post, subredditIconUrl, globalActions, subreddit }) => {
             <p>{formatNumber(post.num_comments)} Comments</p>
           </div>
         </div>
-        {!subreddit.commentsError && subreddit.toggleId === post.id && <Comments id={post.id} subText={post.subreddit_name_prefixed} />}
+        {subreddit.toggleId === post.id && <Comments id={post.id} subText={post.subreddit_name_prefixed} />}
       </div>
     </div>
   );
@@ -187,16 +187,13 @@ const Feed = () => {
     try {
       const data = await fetch(`https://www.reddit.com/${subName}/about.json`);
       const json = await data.json();
-      console.log(json);
       return json.data.icon_img ? json.data.icon_img : null;
     } catch (error) {
-      console.log(error);
       return null;
     }
   };
 
   const handleComments = (subText, id) => {
-    console.log(subText, id);
     dispatch(getComments({ subText, id, limit: 10 }));
     dispatch(subredditSlice.actions.toggleId(id));
     dispatch(subredditSlice.actions.resetLimit(10));
